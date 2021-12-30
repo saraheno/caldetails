@@ -4,19 +4,19 @@
 # initialization of G4GeneralParticleSource
 
 # cosmics
-/gps/energy 1 GeV
+/gps/energy 10 GeV
 #/gps/particle mu-
-#/gps/particle pi-
+/gps/particle pi-
 
 #/gps/particle gamma
-/gps/particle mu-
+#/gps/particle mu-
 
 /gps/pos/type Plane
 /gps/pos/shape Square
 
 /gps/pos/halfx 0.5 mm
 /gps/pos/halfy 0.5 mm
-/gps/pos/centre 0 0 -10 mm
+/gps/pos/centre 0 0 -1501 mm
 /gps/direction 0 0 1
 
 
