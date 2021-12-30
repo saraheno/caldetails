@@ -474,20 +474,6 @@ if(theTrack->GetDefinition()->GetParticleName().contains("gamma")){
               CreateTree::Instance()->ECAL_f_total_C += 1;
             }
           }
-          if (thePrePVName.contains("ecalCrystalP_r"))
-          {
-            CreateTree::Instance()->tot_phot_cer_ECAL_cheren_r_total += 1;
-            if (processName == "Scintillation")
-            {
-              CreateTree::Instance()->h_phot_lambda_ECAL_r_produce_Scin->Fill(photWL);
-              CreateTree::Instance()->ECAL_r_total_S += 1;
-            }
-            if (processName == "Cerenkov")
-            {
-              CreateTree::Instance()->h_phot_lambda_ECAL_r_produce_Ceren->Fill(photWL);
-              CreateTree::Instance()->ECAL_r_total_C += 1;
-            }
-          }
           TrackInformation *theTrackInfo = (TrackInformation *)(theTrack->GetUserInformation());
           G4int aapdgid = theTrackInfo->GetParentPDGid();
 
@@ -524,10 +510,6 @@ if(theTrack->GetDefinition()->GetParticleName().contains("gamma")){
       }
     }
 
-    else if ((thePrePVName.contains("ecalCrystalP_f") || thePrePVName.contains("world")) && thePostPVName.contains("ecalCrystalP_r")) // interface between E1 and E2
-    {
-      CreateTree::Instance()->nTracksE2++; //counting tracks crossing the boundary
-    }
 
 
 
