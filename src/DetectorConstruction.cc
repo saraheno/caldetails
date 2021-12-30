@@ -109,9 +109,14 @@ DetectorConstruction::DetectorConstruction(const string &configFileName)
 
   B_field_intensity = config.read<double>("B_field_intensity") * tesla;
 
-  expHall_x = 1100. * cm;
-  expHall_y = 1100. * cm;
-  expHall_z = 3100. * cm;
+  //  expHall_x = 1100. * cm;
+  //expHall_y = 1100. * cm;
+  //expHall_z = 3100. * cm;
+
+  expHall_x = ecal_front_face+50 * cm;
+  expHall_y = ecal_front_face+50 * cm;
+  expHall_z = ecal_front_length+ecal_rear_length+50 * cm;
+
 
   B_field_IsInitialized = false;
 
