@@ -84,36 +84,7 @@ DetectorConstruction::DetectorConstruction(const string &configFileName)
 
   ConfigFile config(configFileName);
 
-  //------------- Not used --------------
-  config.readInto(bar_length, "bar_length");
-  config.readInto(core_radius_x, "core_radius_x");
-  config.readInto(core_radius_y, "core_radius_y");
-  config.readInto(core_material, "core_material");
-  config.readInto(core_rIndex, "core_rIndex");
-  config.readInto(core_absLength, "core_absLength");
-  config.readInto(gap_size_x, "gap_size_x");
-  config.readInto(gap_size_y, "gap_size_y");
-  config.readInto(det_size_x, "det_size_x");
-  config.readInto(det_size_y, "det_size_y");
-  config.readInto(depth, "depth");
-  config.readInto(cryst_dist, "cryst_dist");
-  config.readInto(trackerX0, "trackerX0");
-  config.readInto(services_thick, "services_thick");
-  config.readInto(fiber_type, "fiber_type");
-  config.readInto(scinti_material, "scinti_material");
-  config.readInto(Cherenc_material, "Cherenc_material");
-  config.readInto(Cherenp_material, "Cherenp_material");
-  config.readInto(rear_filter, "rear_filter");
-  config.readInto(front_filter, "front_filter");
-  config.readInto(hole_diameter, "hole_diameter");
-  config.readInto(fiber_diameter, "fiber_diameter");
-  config.readInto(wrapping_thick, "wrapping_thick");
-  config.readInto(hcal_width, "hcal_width");
-  config.readInto(hcalTile_width, "hcalTile_width");
-  config.readInto(hcalAbs_1_thick, "hcalAbs_1_thick");
-  config.readInto(hcalAbs_2_thick, "hcalAbs_2_thick");
-  config.readInto(solenoid_thick, "solenoid_thick");
-  config.readInto(hcalTile_thick, "hcalTile_thick");
+
 
   //------------- used in Single bar --------------
   config.readInto(checkOverlaps, "checkOverlaps");
@@ -134,7 +105,7 @@ DetectorConstruction::DetectorConstruction(const string &configFileName)
   config.readInto(ecal_rear_length, "ecal_rear_length");
   config.readInto(ecal_front_face, "ecal_front_face");
   config.readInto(ecal_rear_face, "ecal_rear_face");
-  config.readInto(ecal_timing_distance, "ecal_timing_distance");
+
 
   B_field_intensity = config.read<double>("B_field_intensity") * tesla;
 
@@ -147,13 +118,12 @@ DetectorConstruction::DetectorConstruction(const string &configFileName)
   initializeMaterials();
   initializeSurface();
 
-  CreateTree::Instance()->inputTrackerX0 = trackerX0;
-  CreateTree::Instance()->inputServiceAlmm = services_thick;
-  CreateTree::Instance()->inputTimingThick = core_radius_x * 2;
+
+
   CreateTree::Instance()->inputE1Thick = ecal_front_length;
   CreateTree::Instance()->inputE2Thick = ecal_rear_length;
   CreateTree::Instance()->inputE1Width = ecal_front_face;
-  CreateTree::Instance()->inputTimingECAL_dist = ecal_timing_distance;
+
 }
 
 //---- ---- ---- ---- ---- ---- ---- ---- ----  ---- ---- ---- ---- ---- ----
@@ -275,30 +245,9 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
 
       //---------------------- crystal and wrapper --------------------------
       sprintf(name, "ecalCrystalP_f_%d", iCrystal);
-      ecalCrystalP_f[iCrystal] = new G4PVPlacement(piRotEcal, G4ThreeVector(x_pos[iCrystal], y_pos[iCrystal], ecal_timing_distance + ecal_front_length * 0.5), ecalCrystalL_f, name, worldLV, false, 0, checkOverlaps);
+      ecalCrystalP_f[iCrystal] = new G4PVPlacement(piRotEcal, G4ThreeVector(x_pos[iCrystal], y_pos[iCrystal], ecal_front_length * 0.5), ecalCrystalL_f, name, worldLV, false, 0, checkOverlaps);
       sprintf(name, "ecalWrapperP_f_%d", iCrystal);
-      ecalWrapperP_f[iCrystal] = new G4PVPlacement(piRotEcal, G4ThreeVector(x_pos[iCrystal], y_pos[iCrystal], ecal_timing_distance + ecal_front_length * 0.5), ecalWrapperL_f, name, worldLV, false, 0, checkOverlaps);
-/*
-      //---------------------- detectors at both ends --------------------------
-      sprintf(name, "ecalDetP_ff_%d", iCrystal);
-      ecalDetP_ff[iCrystal] = new G4PVPlacement(piRotEcal, G4ThreeVector(x_pos[iCrystal], y_pos[iCrystal] - (0.5 * ecal_front_length + gap_l + window_l + det_l * 0.5) * sin(pointingAngle * deg), ecal_timing_distance + ecal_front_length * 0.5 - (ecal_front_length * 0.5 + gap_l + window_l + det_l * 0.5) * cos(pointingAngle * deg))+arbimov, ecalDetL, name, worldLV, false, 0, checkOverlaps);
-      sprintf(name, "ecalDetP_fr_%d", iCrystal);
-      ecalDetP_fr[iCrystal] = new G4PVPlacement(piRotEcal, G4ThreeVector(x_pos[iCrystal], y_pos[iCrystal] + (0.5 * ecal_front_length + gap_l + window_l + det_l * 0.5) * sin(pointingAngle * deg), ecal_timing_distance + ecal_front_length * 0.5 + (ecal_front_length * 0.5 + gap_l + window_l + det_l * 0.5) * cos(pointingAngle * deg))+arbimov, ecalDetL, name, worldLV, false, 0, checkOverlaps);
-
-      //---------------------- gaps, SiPM at both ends --------------------------
-      sprintf(name, "ecalGapP_ff_%d", iCrystal);
-      ecalGapP_ff[iCrystal] = new G4PVPlacement(piRotEcal, G4ThreeVector(x_pos[iCrystal], y_pos[iCrystal] - (0.5 * ecal_front_length + gap_l * 0.5) * sin(pointingAngle * deg), ecal_timing_distance + ecal_front_length * 0.5 - (ecal_front_length * 0.5 + gap_l * 0.5) * cos(pointingAngle * deg))+arbimov, ecalGapL, name, worldLV, false, 0, checkOverlaps);
-      sprintf(name, "ecalGapP_fr_%d", iCrystal);
-      ecalGapP_fr[iCrystal] = new G4PVPlacement(piRotEcal, G4ThreeVector(x_pos[iCrystal], y_pos[iCrystal] + (0.5 * ecal_front_length + gap_l * 0.5) * sin(pointingAngle * deg), ecal_timing_distance + ecal_front_length * 0.5 + (ecal_front_length * 0.5 + gap_l * 0.5) * cos(pointingAngle * deg))+arbimov, ecalGapL, name, worldLV, false, 0, checkOverlaps);
-      sprintf(name, "ecalDetWindowP_ff_%d", iCrystal);
-      ecalDetWindowP_ff[iCrystal] = new G4PVPlacement(piRotEcal, G4ThreeVector(x_pos[iCrystal], y_pos[iCrystal] - (0.5 * ecal_front_length + gap_l + window_l * 0.5) * sin(pointingAngle * deg), ecal_timing_distance + ecal_front_length * 0.5 - (ecal_front_length * 0.5 + gap_l + window_l * 0.5) * cos(pointingAngle * deg))+arbimov, ecalDetWindowL, name, worldLV, false, 0, checkOverlaps);
-      sprintf(name, "ecalDetWindowP_fr_%d", iCrystal);
-      ecalDetWindowP_fr[iCrystal] = new G4PVPlacement(piRotEcal, G4ThreeVector(x_pos[iCrystal], y_pos[iCrystal] + (0.5 * ecal_front_length + gap_l + window_l * 0.5) * sin(pointingAngle * deg), ecal_timing_distance + ecal_front_length * 0.5 + (ecal_front_length * 0.5 + gap_l + window_l * 0.5) * cos(pointingAngle * deg))+arbimov, ecalDetWindowL, name, worldLV, false, 0, checkOverlaps);
-      sprintf(name, "ecalDetCaseP_ff_%d", iCrystal);
-      ecalDetCaseP_ff[iCrystal] = new G4PVPlacement(piRotEcal, G4ThreeVector(x_pos[iCrystal], y_pos[iCrystal] - (0.5 * ecal_front_length + gap_l + window_l + det_l * 0.5 + Case_l) * sin(pointingAngle * deg), ecal_timing_distance + ecal_front_length * 0.5 - (ecal_front_length * 0.5 + gap_l + window_l + det_l * 0.5 + Case_l) * cos(pointingAngle * deg))+arbimov, ecalDetCaseL, name, worldLV, false, 0, checkOverlaps);
-      sprintf(name, "ecalDetCaseP_fr_%d", iCrystal);
-      ecalDetCaseP_fr[iCrystal] = new G4PVPlacement(piRotEcal_op, G4ThreeVector(x_pos[iCrystal], y_pos[iCrystal] + (0.5 * ecal_front_length + gap_l + window_l + det_l * 0.5 + Case_l) * sin(pointingAngle * deg), ecal_timing_distance + ecal_front_length * 0.5 + (ecal_front_length * 0.5 + gap_l + window_l + det_l * 0.5 + Case_l) * cos(pointingAngle * deg))+arbimov, ecalDetCaseL, name, worldLV, false, 0, checkOverlaps);
-*/
+      ecalWrapperP_f[iCrystal] = new G4PVPlacement(piRotEcal, G4ThreeVector(x_pos[iCrystal], y_pos[iCrystal], ecal_front_length * 0.5), ecalWrapperL_f, name, worldLV, false, 0, checkOverlaps);
     }
   }
 
@@ -334,13 +283,6 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
   VisAttWorld->SetForceWireframe(true);
   worldLV->SetVisAttributes(VisAttWorld);
 
-  G4VisAttributes *VisAttCore = new G4VisAttributes(green);
-  VisAttCore->SetVisibility(false);
-  VisAttCore->SetForceWireframe(true);
-
-  G4VisAttributes *VisCrystalCore = new G4VisAttributes(brass);
-  VisCrystalCore->SetVisibility(false);
-  VisCrystalCore->SetForceWireframe(true);
 
   G4VisAttributes *VisAttGap = new G4VisAttributes(blue);
   VisAttGap->SetVisibility(false);
@@ -397,39 +339,6 @@ void DetectorConstruction::initializeMaterials()
   }
   G4cout << "Wo. material: " << WoMaterial << G4endl;
 
-  CoMaterial = NULL;
-  if (core_material == 1)
-    CoMaterial = MyMaterials::Quartz();
-  else if (core_material == 2)
-    CoMaterial = MyMaterials::SiO2();
-  else if (core_material == 3)
-    CoMaterial = MyMaterials::SiO2_Ce();
-  else if (core_material == 4)
-    CoMaterial = MyMaterials::LuAG_Ce();
-  else if (core_material == 5)
-    CoMaterial = MyMaterials::YAG_Ce();
-  else if (core_material == 6)
-    CoMaterial = MyMaterials::LSO();
-  else if (core_material == 7)
-    CoMaterial = MyMaterials::LYSO();
-  else if (core_material == 8)
-    CoMaterial = MyMaterials::LuAG_undoped();
-  else if (core_material == 9)
-    CoMaterial = MyMaterials::GAGG_Ce();
-  else if (core_material == 11)
-    CoMaterial = MyMaterials::LuAG_Pr();
-  else if (core_material == 12)
-    CoMaterial = MyMaterials::PbF2();
-  else if (core_material == 13)
-    CoMaterial = MyMaterials::PlasticBC408();
-  else if (core_material == 14)
-    CoMaterial = MyMaterials::PlasticBC418();
-  else
-  {
-    G4cerr << "<DetectorConstructioninitializeMaterials>: Invalid fibre clad material specifier " << core_material << G4endl;
-    exit(-1);
-  }
-  G4cout << "Co. material: " << CoMaterial << G4endl;
 
   EcalMaterial = NULL;
   if (ecal_material == 1)
@@ -476,128 +385,6 @@ void DetectorConstruction::initializeMaterials()
   G4cout << "ECAL material: " << EcalMaterial << G4endl;
 
   /************************************************************************************/
-  ScintiMaterial = NULL;
-  if (scinti_material == 1)
-    ScintiMaterial = MyMaterials::Quartz();
-  else if (scinti_material == 2)
-    ScintiMaterial = MyMaterials::SiO2();
-  else if (scinti_material == 3)
-    ScintiMaterial = MyMaterials::SiO2_Ce();
-  else if (scinti_material == 4)
-    ScintiMaterial = MyMaterials::LuAG_Ce();
-  else if (scinti_material == 5)
-    ScintiMaterial = MyMaterials::YAG_Ce();
-  else if (scinti_material == 6)
-    ScintiMaterial = MyMaterials::LSO();
-  else if (scinti_material == 7)
-    ScintiMaterial = MyMaterials::LYSO();
-  else if (scinti_material == 8)
-    ScintiMaterial = MyMaterials::LuAG_undoped();
-  else if (scinti_material == 9)
-    ScintiMaterial = MyMaterials::GAGG_Ce();
-  else if (scinti_material == 10)
-    ScintiMaterial = MyMaterials::LuAG_Pr();
-  else if (scinti_material == 11)
-    ScintiMaterial = MyMaterials::PbF2();
-  else if (scinti_material == 12)
-    ScintiMaterial = MyMaterials::PlasticBC408();
-  else if (scinti_material == 13)
-    ScintiMaterial = MyMaterials::PlasticBC418();
-  else if (scinti_material == 14)
-    ScintiMaterial = MyMaterials::PWO();
-  else if (scinti_material == 15)
-    ScintiMaterial = MyMaterials::Acrylic();
-  else if (scinti_material == 16)
-    ScintiMaterial = MyMaterials::copper();
-  else if (scinti_material == 17)
-    ScintiMaterial = MyMaterials::EJ200();
-  else
-  {
-    G4cerr << "<DetectorConstructioninitializeMaterials>: Invalid fibre clad material specifier " << scinti_material << G4endl;
-    exit(-1);
-  }
-
-  CherencMaterial = NULL;
-  if (Cherenc_material == 1)
-    CherencMaterial = MyMaterials::Quartz();
-  else if (Cherenc_material == 2)
-    CherencMaterial = MyMaterials::SiO2();
-  else if (Cherenc_material == 3)
-    CherencMaterial = MyMaterials::SiO2_Ce();
-  else if (Cherenc_material == 4)
-    CherencMaterial = MyMaterials::LuAG_Ce();
-  else if (Cherenc_material == 5)
-    CherencMaterial = MyMaterials::YAG_Ce();
-  else if (Cherenc_material == 6)
-    CherencMaterial = MyMaterials::LSO();
-  else if (Cherenc_material == 7)
-    CherencMaterial = MyMaterials::LYSO();
-  else if (Cherenc_material == 8)
-    CherencMaterial = MyMaterials::LuAG_undoped();
-  else if (Cherenc_material == 9)
-    CherencMaterial = MyMaterials::GAGG_Ce();
-  else if (Cherenc_material == 10)
-    CherencMaterial = MyMaterials::LuAG_Pr();
-  else if (Cherenc_material == 11)
-    CherencMaterial = MyMaterials::PbF2();
-  else if (Cherenc_material == 12)
-    CherencMaterial = MyMaterials::PlasticBC408();
-  else if (Cherenc_material == 13)
-    CherencMaterial = MyMaterials::PlasticBC418();
-  else if (Cherenc_material == 14)
-    CherencMaterial = MyMaterials::PWO();
-  else if (Cherenc_material == 15)
-    CherencMaterial = MyMaterials::Acrylic();
-  else if (Cherenc_material == 16)
-    CherencMaterial = MyMaterials::copper();
-  else if (Cherenc_material == 17)
-    CherencMaterial = MyMaterials::EJ200();
-  else
-  {
-    G4cerr << "<DetectorConstructioninitializeMaterials>: Invalid fibre clad material specifier " << Cherenc_material << G4endl;
-    exit(-1);
-  }
-
-  CherenpMaterial = NULL;
-  if (Cherenp_material == 1)
-    CherenpMaterial = MyMaterials::Quartz();
-  else if (Cherenp_material == 2)
-    CherenpMaterial = MyMaterials::SiO2();
-  else if (Cherenp_material == 3)
-    CherenpMaterial = MyMaterials::SiO2_Ce();
-  else if (Cherenp_material == 4)
-    CherenpMaterial = MyMaterials::LuAG_Ce();
-  else if (Cherenp_material == 5)
-    CherenpMaterial = MyMaterials::YAG_Ce();
-  else if (Cherenp_material == 6)
-    CherenpMaterial = MyMaterials::LSO();
-  else if (Cherenp_material == 7)
-    CherenpMaterial = MyMaterials::LYSO();
-  else if (Cherenp_material == 8)
-    CherenpMaterial = MyMaterials::LuAG_undoped();
-  else if (Cherenp_material == 9)
-    CherenpMaterial = MyMaterials::GAGG_Ce();
-  else if (Cherenp_material == 10)
-    CherenpMaterial = MyMaterials::LuAG_Pr();
-  else if (Cherenp_material == 11)
-    CherenpMaterial = MyMaterials::PbF2();
-  else if (Cherenp_material == 12)
-    CherenpMaterial = MyMaterials::PlasticBC408();
-  else if (Cherenp_material == 13)
-    CherenpMaterial = MyMaterials::PlasticBC418();
-  else if (Cherenp_material == 14)
-    CherenpMaterial = MyMaterials::PWO();
-  else if (Cherenp_material == 15)
-    CherenpMaterial = MyMaterials::Acrylic();
-  else if (Cherenp_material == 16)
-    CherenpMaterial = MyMaterials::copper();
-  else if (Cherenp_material == 17)
-    CherenpMaterial = MyMaterials::EJ200();
-  else
-  {
-    G4cerr << "<DetectorConstructioninitializeMaterials>: Invalid fibre clad material specifier " << Cherenp_material << G4endl;
-    exit(-1);
-  }
 
   WrapMaterial = NULL;
   if (wrap_material == 1)
@@ -681,27 +468,6 @@ void DetectorConstruction::initializeMaterials()
   }
   G4cout << "Detector material: " << det_material << G4endl;
 
-  //------------------
-  // change properties
-
-  if (core_absLength > 0)
-  {
-    const G4int nEntries_ABS = 2;
-    G4double PhotonEnergy_ABS[nEntries_ABS] = {1. * eV, 10. * eV};
-    G4double Absorption[nEntries_ABS] = {core_absLength * mm, core_absLength * mm};
-
-    CoMaterial->GetMaterialPropertiesTable()->RemoveProperty("ABSLENGTH");
-    CoMaterial->GetMaterialPropertiesTable()->AddProperty("ABSLENGTH", PhotonEnergy_ABS, Absorption, nEntries_ABS);
-  }
-  if (core_rIndex > 0)
-  {
-    const G4int nEntries_RI = 2;
-    G4double PhotonEnergy_RI[nEntries_RI] = {1. * eV, 10. * eV};
-    G4double RefractiveIndex[nEntries_RI] = {core_rIndex, core_rIndex};
-
-    CoMaterial->GetMaterialPropertiesTable()->RemoveProperty("RINDEX");
-    CoMaterial->GetMaterialPropertiesTable()->AddProperty("RINDEX", PhotonEnergy_RI, RefractiveIndex, nEntries_RI);
-  }
 }
 
 //---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
@@ -796,52 +562,6 @@ void DetectorConstruction::initializeSurface()
   G4MaterialPropertiesTable *Filtertable_ug5 = new G4MaterialPropertiesTable();
   Filtertable_ug5->AddProperty("REFLECTIVITY", PhotonEnergy_tran_ug5, transIndex_ug5, nEntries_tran_ug5);
 
-  if (front_filter == -1)
-  {
-    std::cout << "No front Filter!" << std::endl;
-  }
-  else if (front_filter == 0)
-  {
-    fFilterSurface_ff->SetMaterialPropertiesTable(Filtertable_u330);
-  }
-  else if (front_filter == 1)
-  {
-    fFilterSurface_ff->SetMaterialPropertiesTable(Filtertable_ug5);
-  }
-  if (rear_filter == -1)
-  {
-    std::cout << "No rear Filter!" << std::endl;
-  }
-  else if (rear_filter == 0)
-  {
-    fFilterSurface_fr->SetMaterialPropertiesTable(Filtertable_u330);
-  }
-  else if (rear_filter == 1)
-  {
-    fFilterSurface_fr->SetMaterialPropertiesTable(Filtertable_ug5);
-  }
-
-  /*
-  G4MaterialPropertiesTable* Filtertable_ff = fPMTSurface_ff->GetMaterialPropertiesTable();
-  if( Filtertable ){
-    Filtertable->RemoveProperty( "TRANSMITTANCE" );
-    Filtertable->AddProperty("TRANSMITTANCE", PhotonEnergy_tran, transIndex, nEntries_tran);
-  } else {
-    Filtertable = new G4MaterialPropertiesTable();
-    Filtertable->AddProperty("TRANSMITTANCE", PhotonEnergy_tran, transIndex, nEntries_tran);
-    fFilterSurface->SetMaterialPropertiesTable( Filtertable );
-  }
-*/
-
-  /*
-  G4MaterialPropertiesTable* Filtertable = fFilterSurface->GetMaterialPropertiesTable();
-  const G4int nEntries_tran = 18;
-  G4double PhotonEnergy_tran[nEntries_tran] = {4.103235582*eV, 4.048912761*eV,3.944470896     *eV,3.81331407      *eV,3.750947295     *eV,3.690598697     *eV,3.603625797     *eV,3.534216059     *eV,3.456978466     *eV,3.380554073     *eV,3.309819592     *eV,3.230572067     *eV,3.185706353     *eV,3.131340814     *eV,3.087086539     *eV,3.050146549     *eV,2.992445212     *eV,2.933127681     *eV};
-
-  G4double transIndex[nEntries_tran] = {0.201372        ,0.202705        ,0.211043        ,0.227125        ,0.234102        ,0.233987        ,0.235942        ,0.235798        ,0.229958        ,0.219856        ,0.199831        ,0.155664        ,0.115833        ,0.068881        ,0.037554        ,0.017592        ,0.00466 ,0.000935        };
-  Filtertable->AddProperty("TRANSMITTANCE", PhotonEnergy_tran, transIndex, nEntries_tran);
-  fFilterSurface->SetMaterialPropertiesTable( Filtertable );
-*/
   return;
 }
 

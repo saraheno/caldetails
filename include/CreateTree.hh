@@ -61,6 +61,7 @@ public:
 
   //integrated energy in each longitudinal layer
   float depositedEnergyEscapeWorld;
+  float depositedTotalEnergyEscapeWorld;
 
   float depositedEnergyTotal;
   float depositedEnergyTiming_f;
@@ -204,7 +205,14 @@ public:
   TH2F *h_time_z_egamma;
   TH2F *h_time_z_other;
   TH2F *pdg_beta;
+  TH2F *pdg_ke;
   TH1F *inelasticEK;
+
+  TH1F *h_totaldepositedE;
+  TH1F *h_totaldepositedEpescapeke;
+
+
+
   std::vector<int> *pdgid_escape;
   std::vector<float> *KineticEnergy_escape;
   std::vector<float> *positionx_escape;

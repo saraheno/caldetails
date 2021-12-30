@@ -173,6 +173,15 @@ positionz_escape = new vector<float>;
   this->GetTree()->Branch("SDdetected_rr_S", &this->SDdetected_rr_S, "SDdetected_rr_S/I");
   this->GetTree()->Branch("SDdetected_rr_C", &this->SDdetected_rr_C, "SDdetected_rr_C/I");
 
+
+  // basic plots
+  h_totaldepositedE = new TH1F("h_totaldepositedE","",100,0.,10.);
+  h_totaldepositedEpescapeke = new TH1F("h_totaldepositedEpescapeke","",100,0.,10.);
+  pdg_ke = new TH2F("pdg_ke","",10000,-5000,5000,100,0,10.);
+
+
+
+
   //detected photons 
   h_phot_lambda_ECAL_f_Scin = new TH1F("h_phot_lambda_ECAL_f_Scin", "", 1250, 0., 1250.);
   h_phot_lambda_ECAL_r_Scin = new TH1F("h_phot_lambda_ECAL_r_Scin", "", 1250, 0., 1250.);
@@ -233,6 +242,20 @@ CreateTree::~CreateTree()
 int CreateTree::Fill()
 {
 //  this->GetTree()->Write(NULL, TObject::kOverwrite );
+
+  std::cout<<"depositedEnergyTotal is "<<depositedEnergyTotal<<std::endl;
+  std::cout<<"depositedEnergyEscapeWorld is "<<depositedEnergyEscapeWorld<<std::endl;
+  float sum = depositedEnergyTotal+depositedEnergyEscapeWorld;
+  std::cout<<"sum is "<<sum<<std::endl;
+  std::cout<<"depositedEnergyEcalDet is "<<depositedEnergyECAL_f[0]<<std::endl;
+  float diff = depositedEnergyTotal - depositedEnergyECAL_f[0];
+  std::cout<<"diff is "<<diff<<std::endl;
+
+  h_totaldepositedE->Fill(depositedEnergyTotal);
+  h_totaldepositedEpescapeke->Fill(depositedEnergyTotal+depositedEnergyEscapeWorld);
+
+
+
   return this->GetTree()->Fill();
 }
 
@@ -273,6 +296,13 @@ bool CreateTree::Write(TFile *outfile)
   h_phot_detect_time_r_Ceren->Write();
   h_time_z_egamma->Write();
   h_time_z_other->Write();
+
+  pdg_ke->Write();
+  h_totaldepositedE->Write();
+  h_totaldepositedEpescapeke->Write();
+
+
+
   return true;
 }
 
@@ -293,6 +323,7 @@ void CreateTree::Clear()
   }
 
   depositedEnergyEscapeWorld = 0.;
+  depositedTotalEnergyEscapeWorld = 0.;
 
   depositedEnergyTotal = 0.;
   depositedEnergyTiming_f = 0.;

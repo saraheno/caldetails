@@ -77,33 +77,6 @@ public:
   void ConstructField();
   void SetMaxStep(G4double);
   void initializeSurface();
-/*
-  void initializeSurfaces(G4OpticalSurface *mySurface, string surfaceType);
-  void initializeReflectivitySurface(G4OpticalSurface *surface, string surfaceType);
-    TString cReffile;
-    G4double cReflectivity;
-    G4double cSurrefind;
-    int cSurtype;
-    G4double cSpecularspike;
-    G4double cSpecularlobe;
-    G4double cSigmaalpha;
-    G4double cLambertian;
-    G4double cBackscatter;
-    int crystalSurfinish;
-    TString RefFile;
-    G4double reflectivity;
-    G4double surrefind;
-    int surtype;
-    G4double specularspike;
-    G4double specularlobe;
-    G4double sigmaalpha;
-    G4double lambertian;
-    G4double backscatter;
-    G4double crystal_reflectivity;
-    int surfinish;
-    G4double Ephoton[3];
-    G4double mu_ind;
-*/
 
 
   Fiber *GetFiber() { return &fib; };
@@ -116,58 +89,35 @@ private:
   G4double expHall_z;
 
   G4int world_material;
-  G4double bar_length;
   G4int detector;
 
-  G4double core_radius_x;
-  G4double core_radius_y;
-  G4int core_material;
-  G4double core_rIndex;
-  G4double core_absLength;
 
   G4int gap_material;
   G4double gap_l;
-  G4double gap_size_x;
-  G4double gap_size_y;
+
 
   G4int det_material;
   G4double det_l;
-  G4double det_size_x;
-  G4double det_size_y;
 
-  G4double depth;
-  G4double cryst_dist;
-  G4double trackerX0;
-  G4double services_thick;
 
   G4double ecal_incline;
   G4double ecal_xy_gap;
-  G4double fiber_type;
+
+
+
   G4int ecal_material;
-  G4int scinti_material;
-  G4int Cherenc_material;
-  G4int Cherenp_material;
   G4int wrap_material;
   G4double wrap_ref;
-  G4int front_filter;
-  G4int rear_filter;
+
 
   G4double ecal_front_length;
   G4double ecal_rear_length;
   G4double ecal_front_face;
   G4double ecal_rear_face;
-  G4double hole_diameter;
-  G4double fiber_diameter;
-  G4double wrapping_thick;
-  G4double ecal_timing_distance;
+
+
   G4double ecal_det_size;
 
-  G4double hcal_width;
-  G4double hcalTile_width;
-  G4double hcalAbs_1_thick;
-  G4double hcalAbs_2_thick;
-  G4double solenoid_thick;
-  G4double hcalTile_thick;
 
   G4UniformMagField *B_field;
   G4bool B_field_IsInitialized;

@@ -25,26 +25,6 @@
 
 using namespace std;
 using namespace CLHEP;
-/*
-SteppingAction::SteppingAction (const string& configFileName)
-{
-  //---------------------------------------
-  //------------- Parameters --------------
-  //---------------------------------------
-  
-  ConfigFile config (configFileName) ;
-
-  config.readInto(core_material, "core_material"); 
-
-  if (core_material == 0)
-  {
-	  config.readInto(toy_ly,	"toy_ly");
-	  config.readInto(toy_decay,	"toy_decay");
-	  config.readInto(toy_rise,	"toy_rise");
-  }
-  
-
-}*/
 
 int to_int(string name)
 {
@@ -81,7 +61,7 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
 
   //  const G4ThreeVector& theTrackDirection = theTrack->GetMomentumDirection();
   //  const G4ThreeVector& theTrackVertexDirection = theTrack->GetVertexMomentumDirection();
-  //  TrackInformation* theTrackInfo = (TrackInformation*)(theTrack->GetUserInformation());
+  //  TrackInformation* theTrackInfo = (TrackInformation*)(theTrack->GetUserInformaation());
 
   G4ParticleDefinition *particleType = theTrack->GetDefinition();
   //G4int trackID = theTrack->GetTrackID();
@@ -226,6 +206,8 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
 
 //if(nStep == 1) CreateTree::Instance()->pdg_beta->Fill(TrPDGid,theTrack->GetVelocity()/299.792,);
 CreateTree::Instance()->pdg_beta->Fill(TrPDGid,thePrePoint->GetBeta(),energyIon / GeV);
+ CreateTree::Instance()->pdg_ke->Fill(TrPDGid,thePrePoint->GetKineticEnergy(),energyIon / GeV);
+
 //if(TrPDGid>=111) cout<<energyIon / GeV<<endl;
 
   if(thePostPoint->GetProcessDefinedStep()->GetProcessName().contains("Inelast")){
@@ -319,6 +301,7 @@ if(abs(TrPDGid)==22 || abs(TrPDGid)==11){
             else CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetKineticEnergy()/GeV;
 */
   CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetKineticEnergy()/GeV;
+  CreateTree::Instance()->depositedTotalEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV;
   CreateTree::Instance()->pdgid_escape->push_back( TrPDGid);
   CreateTree::Instance()->KineticEnergy_escape->push_back((theStep->GetPostStepPoint())->GetKineticEnergy() / GeV);
   CreateTree::Instance()->positionx_escape->push_back(thePostPosition.x() / mm);
