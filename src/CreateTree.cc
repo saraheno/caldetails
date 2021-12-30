@@ -21,7 +21,7 @@ CreateTree::CreateTree(TString name)
   this->GetTree()->Branch("Event", &this->Event, "Event/I");
 
 
-  this->GetTree()->Branch("inputServiceAlmm", &this->inputServiceAlmm, "inputServiceAlmm/F");
+
   this->GetTree()->Branch("inputE1Thick", &this->inputE1Thick, "inputE1Thick/F");
   this->GetTree()->Branch("inputE2Thick", &this->inputE2Thick, "inputE2Thick/F");
   this->GetTree()->Branch("inputE1Width", &this->inputE1Width, "inputE1Width/F");

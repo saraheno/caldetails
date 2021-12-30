@@ -37,12 +37,12 @@ public:
   int Event;
 
 
-  int inputServiceAlmm;
-  int inputTimingThick;
+
+
   int inputE1Thick;
   int inputE2Thick;
   int inputE1Width;
-  int inputTimingECAL_dist;
+
 
   std::vector<float> *inputMomentum;        // Px Py Pz E
   std::vector<float> *inputInitialPosition; // x, y, z
