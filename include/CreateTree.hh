@@ -36,7 +36,7 @@ public:
 
   int Event;
 
-  int inputTrackerX0;
+
   int inputServiceAlmm;
   int inputTimingThick;
   int inputE1Thick;
@@ -121,7 +121,7 @@ public:
   int SDdetected_rr_S;
   int SDdetected_rr_C;
   /***************** begin to seperate energy into different channels    ******************/
-  float Edep_Tracker_layer[6];
+
 
   //energy deposit in each trasnversally segmented channel
   float Edep_Timing_f_ch[18];

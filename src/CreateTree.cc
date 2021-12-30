@@ -20,7 +20,7 @@ CreateTree::CreateTree(TString name)
 
   this->GetTree()->Branch("Event", &this->Event, "Event/I");
 
-  this->GetTree()->Branch("inputTrackerX0", &this->inputTrackerX0, "inputTrackerX0/F");
+
   this->GetTree()->Branch("inputServiceAlmm", &this->inputServiceAlmm, "inputServiceAlmm/F");
   this->GetTree()->Branch("inputE1Thick", &this->inputE1Thick, "inputE1Thick/F");
   this->GetTree()->Branch("inputE2Thick", &this->inputE2Thick, "inputE2Thick/F");
@@ -320,10 +320,7 @@ void CreateTree::Clear()
     tot_phot_cer_ECAL_cheren_r_particleID[iparticle] = 0.;
   }
 
-  for (int iLayer = 0; iLayer < 6; iLayer++)
-  {
-    Edep_Tracker_layer[iLayer] = 0.;
-  }
+
 
   for (int iBar = 0; iBar < 18; iBar++)
   {
