@@ -64,46 +64,25 @@ public:
   float depositedTotalEnergyEscapeWorld;
 
   float depositedEnergyTotal;
-  float depositedEnergyTiming_f;
-  float depositedEnergyTiming_r;
-  float depositedEnergyECAL_f[3];
-  float depositedEnergyECAL_r[3];
-  float depositedEnergyHCALAct;
-  float depositedEnergyHCALPas;
-  float depositedEnergyServices;
-  float depositedEnergyTimingGap;
+  float depositedEnergyECAL_f;
+  float depositedEnergyECAL_r;
   float depositedEnergyEcalGap;
   float depositedEnergyEcalDet;
-  float depositedEnergySolenoid;
   float depositedEnergyWorld;
 
   float depositedIonEnergyTotal;
-  float depositedIonEnergyTiming_f;
-  float depositedIonEnergyTiming_r;
-  float depositedIonEnergyECAL_f[3];
-  float depositedIonEnergyECAL_r[3];
-  float depositedIonEnergyHCALAct;
-  float depositedIonEnergyHCALPas;
-  float depositedIonEnergyServices;
-  float depositedIonEnergyTimingGap;
+  float depositedIonEnergyECAL_f;
+  float depositedIonEnergyECAL_r;
   float depositedIonEnergyEcalGap;
   float depositedIonEnergyEcalDet;
-  float depositedIonEnergySolenoid;
   float depositedIonEnergyWorld;
 
   float depositedElecEnergyTotal;
   float depositedHadronIonEnergyTotal;
-  float depositedElecEnergyTiming_f;
-  float depositedElecEnergyTiming_r;
-  float depositedElecEnergyECAL_f[3];
-  float depositedElecEnergyECAL_r[3];
-  float depositedElecEnergyHCALAct;
-  float depositedElecEnergyHCALPas;
-  float depositedElecEnergyServices;
-  float depositedElecEnergyTimingGap;
+  float depositedElecEnergyECAL_f;
+  float depositedElecEnergyECAL_r;
   float depositedElecEnergyEcalGap;
   float depositedElecEnergyEcalDet;
-  float depositedElecEnergySolenoid;
   float depositedElecEnergyWorld;
 
   //store the energy deposition by components
@@ -135,7 +114,7 @@ public:
   int tot_phot_cer_ECAL_cheren_r_total;
   int tot_phot_cer_ECAL_cheren_f_particleID[8];
   int tot_phot_cer_ECAL_cheren_r_particleID[8];
-  int tot_phot_cer_HCAL;
+
 
   int SDdetected_ff_S;
   int SDdetected_ff_C;
