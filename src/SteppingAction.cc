@@ -214,39 +214,8 @@ CreateTree::Instance()->pdg_beta->Fill(TrPDGid,thePrePoint->GetBeta(),energyIon 
     CreateTree::Instance()->Ninelastic++;
     CreateTree::Instance()->inelasticEK->Fill((theStep->GetPreStepPoint()->GetKineticEnergy() - theStep->GetPostStepPoint()->GetKineticEnergy())/GeV);
 
-/*
-    cout<<"pdg:"<<TrPDGid<<" process "<<thePostPoint->GetProcessDefinedStep()->GetProcessName()<<"nonion enegry "<<theStep->GetNonIonizingEnergyDeposit()/GeV <<" tot "<<theStep->GetTotalEnergyDeposit() / GeV<<" EK change "<<(theStep->GetPreStepPoint()->GetKineticEnergy() - theStep->GetPostStepPoint()->GetKineticEnergy())/GeV<<endl;
-        const std::vector<const G4Track*>* secondaries = theStep->GetSecondaryInCurrentStep();
-        for (auto t = secondaries->begin(); t != secondaries->end(); t++) {
-            std::cout << "**"<<(*t)->GetParticleDefinition()->GetParticleName()
-                      << " ParentID: "<<(*t)->GetParentID()
-                      << " IsBelowThreshold: "<<(*t)->IsBelowThreshold()
-                      <<std::endl;
-            std::cout << " Etot: "<<(*t)->GetTotalEnergy()/GeV<<" Ek: "<<(*t)->GetKineticEnergy()/GeV//<<" p: "<<(*t)->GetMomentum()
-                      <<" v: "<<(*t)->GetVelocity()/299.792<<"c "<<" m: "<<  (*t)->GetParticleDefinition()->GetPDGMass()/GeV<<" GeV"
-                      <<std::endl;
-        }
-*/
   }
 
-//  if(thePostPoint->GetProcessDefinedStep()->GetProcessName().contains("Inelast")) cout<<"pdg:"<<TrPDGid<<" process "<<thePostPoint->GetProcessDefinedStep()->GetProcessName()<<"ion enegry"<<energyIon / GeV<<" tot "<<theStep->GetTotalEnergyDeposit() / GeV<<endl;
-
-/*
-if (theTrack->GetParentID() == 0 &&  ((thePostPoint->GetProcessDefinedStep()->GetProcessName() == "pi-Inelastic") || (thePostPoint->GetProcessDefinedStep()->GetProcessName() == "pi+Inelastic"))) {
-
-        const std::vector<const G4Track*>* secondaries = theStep->GetSecondaryInCurrentStep();
-        if(secondaries->size()==0) std::cout<<"No secondaries"<<std::endl;
-        for (auto t = secondaries->begin(); t != secondaries->end(); t++) {
-            std::cout << "**"<<(*t)->GetParticleDefinition()->GetParticleName()
-                      << " ParentID: "<<(*t)->GetParentID()
-                      << " IsBelowThreshold: "<<(*t)->IsBelowThreshold()
-                      <<std::endl;
-            std::cout << " Etot: "<<(*t)->GetTotalEnergy()/GeV<<" Ek: "<<(*t)->GetKineticEnergy()/GeV//<<" p: "<<(*t)->GetMomentum()
-                      <<" v: "<<(*t)->GetVelocity()/299.792<<"c "<<" m: "<<  (*t)->GetParticleDefinition()->GetPDGMass()/GeV<<" GeV"
-                      <<std::endl;
-        }
-}
-*/
 
 if(abs(TrPDGid)==22){
     CreateTree::Instance()->ion_z->Fill(global_z, energyIon);
@@ -266,40 +235,9 @@ if(abs(TrPDGid)==22 || abs(TrPDGid)==11){
     if(global_z>-1500 + inter_len*5 && global_z<-1500 + inter_len*6) CreateTree::Instance()->ion_r6->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
     if(global_z>-1500 + inter_len*6 && global_z<-1500 + inter_len*7) CreateTree::Instance()->ion_r7->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
 
-/*
-  if(theTrack->GetDefinition()->GetParticleName().contains("pi") || theTrack->GetDefinition()->GetParticleName().contains("eta") || theTrack->GetDefinition()->GetParticleName().contains("kaon")){
-    if(theStep->GetPostStepPoint()->GetKineticEnergy()==0)
-      CreateTree::Instance()->depositedEnergyTotal += theTrack->GetDefinition()->GetPDGMass()/ GeV;
-  }
-*/
-/*
-  if(theTrack->GetParentID() == 0 && thePostPoint->GetProcessDefinedStep()->GetProcessName().contains("pi-Inelastic")){
-      cout<<"pi-Inelastic"<<endl;
-      CreateTree::Instance()->depositedEnergyTotal += 100;
-  }
-*/
-/*
-  if(theTrack->GetDefinition()->GetParticleName().contains("anti")){
-    if(theStep->GetPostStepPoint()->GetKineticEnergy()==0)
-      CreateTree::Instance()->depositedEnergyTotal += 2*theTrack->GetDefinition()->GetPDGMass()/ GeV;
-  }
-*/
   bool outworld = ((theStep->GetPostStepPoint())->GetStepStatus()) == fWorldBoundary;
   if (outworld)
   {
-/*
-            if(theTrack->GetDefinition()->GetParticleName()=="pi0") CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV;
-            else if(theTrack->GetDefinition()->GetParticleName()=="pi-") CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV;
-            else if(theTrack->GetDefinition()->GetParticleName()=="pi+") CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV;
-            else if(theTrack->GetDefinition()->GetParticleName()=="eta_prime") CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV;
-            else if(theTrack->GetDefinition()->GetParticleName()=="kaon0S") CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV;
-            else if(theTrack->GetDefinition()->GetParticleName()=="kaon0L") CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV;
-            else if(theTrack->GetDefinition()->GetParticleName()=="kaon+") CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV;
-            else if(theTrack->GetDefinition()->GetParticleName()=="kaon-") CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV;
-            else if(theTrack->GetDefinition()->GetParticleName()=="eta") CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV;
-            else if(theTrack->GetDefinition()->GetParticleName().contains("anti")) CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV + theTrack->GetDefinition()->GetPDGMass()/ GeV;
-            else CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetKineticEnergy()/GeV;
-*/
   CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetKineticEnergy()/GeV;
   CreateTree::Instance()->depositedTotalEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV;
   CreateTree::Instance()->pdgid_escape->push_back( TrPDGid);
@@ -309,59 +247,6 @@ if(abs(TrPDGid)==22 || abs(TrPDGid)==11){
   CreateTree::Instance()->positionz_escape->push_back(thePostPosition.z() / mm);
   }
 
-  //if(nStep==1 && theTrack->GetDefinition()->GetParticleName().contains("anti")) std::cout<<"place:"<<thePostPVName<<" "<<theTrack->GetDefinition()->GetParticleName()<<std::endl;
-
-//if (theTrack->GetParentID() == 0 &&  ((thePostPoint->GetProcessDefinedStep()->GetProcessName() == "pi-Inelastic") || (thePostPoint->GetProcessDefinedStep()->GetProcessName() == "pi+Inelastic"))) {
-//if  (theTrack->GetParentID() == 0 && ((thePostPoint->GetProcessDefinedStep()->GetProcessName() == "pi-Inelastic") || (thePostPoint->GetProcessDefinedStep()->GetProcessName() == "pi+Inelastic"))) {
-/*
-if(theTrack->GetDefinition()->GetParticleName().contains("gamma")){
-
-//if (thePostPoint->GetProcessDefinedStep()->GetProcessName() == "Cerenkov"){
-
-
-        std::cout<<"place:"<<thePostPVName<<" "<<std::endl;//theTrack->GetDefinition()->GetParticleName()<<std::endl;
-        std::cout << "**process name: " << thePostPoint->GetProcessDefinedStep()->GetProcessName() << std::endl;
-        std::cout << "**TrackID: " << theStep->GetTrack()->GetTrackID() << std::endl;
-        std::cout << "**total energy pre_step: " << thePrePoint->GetTotalEnergy() / GeV<<"GeV, post_step: "<<thePostPoint->GetTotalEnergy() / GeV <<" GeV"<< std::endl;
-        std::cout << "**kinetic energy pre_step: " << thePrePoint->GetKineticEnergy() / GeV<<"GeV, post_step: "<<thePostPoint->GetKineticEnergy() / GeV <<" GeV"<< std::endl;
-        std::cout << "PreEnergy - PostEnergy: "<<thePrePoint->GetTotalEnergy() / GeV - thePostPoint->GetTotalEnergy() / GeV<<std::endl;
-        std::cout << "GetTotalEnergyDeposit: "<<theStep->GetTotalEnergyDeposit() /GeV<<" ion deposit"<<energyIon /GeV<<std::endl;
-        std::cout << "Total Lost:  "<<thePrePoint->GetTotalEnergy() / GeV - thePostPoint->GetTotalEnergy() / GeV - theStep->GetTotalEnergyDeposit() /GeV << std::endl;
-        std::cout << " Secondary: ------------------------------ " << std::endl;
-
-        const std::vector<const G4Track*>* secondaries = theStep->GetSecondaryInCurrentStep();
-        if(secondaries->size()==0) std::cout<<"No secondaries"<<std::endl;
-        double sum_Etrans=0;
-        for (auto t = secondaries->begin(); t != secondaries->end(); t++) {
-        //if((*t)->GetTrackStatus()==fAlive){
-            if((*t)->GetParticleDefinition()->GetParticleName()=="pi0") sum_Etrans+=(*t)->GetTotalEnergy()/GeV;
-            else if((*t)->GetParticleDefinition()->GetParticleName()=="pi-") sum_Etrans+=(*t)->GetTotalEnergy()/GeV;
-            else if((*t)->GetParticleDefinition()->GetParticleName()=="pi+") sum_Etrans+=(*t)->GetTotalEnergy()/GeV;
-            else if((*t)->GetParticleDefinition()->GetParticleName()=="eta_prime") sum_Etrans+=(*t)->GetTotalEnergy()/GeV;
-            else if((*t)->GetParticleDefinition()->GetParticleName()=="kaon0S") sum_Etrans+=(*t)->GetTotalEnergy()/GeV;
-            else if((*t)->GetParticleDefinition()->GetParticleName()=="kaon0L") sum_Etrans+=(*t)->GetTotalEnergy()/GeV;
-            else if((*t)->GetParticleDefinition()->GetParticleName()=="kaon+") sum_Etrans+=(*t)->GetTotalEnergy()/GeV;
-            else if((*t)->GetParticleDefinition()->GetParticleName()=="kaon-") sum_Etrans+=(*t)->GetTotalEnergy()/GeV;
-            else if((*t)->GetParticleDefinition()->GetParticleName()=="eta") sum_Etrans+=(*t)->GetTotalEnergy()/GeV;
-            else if((*t)->GetParticleDefinition()->GetParticleName().contains("anti")) sum_Etrans+=(*t)->GetTotalEnergy()/GeV + (*t)->GetParticleDefinition()->GetPDGMass()/ GeV;
-            else sum_Etrans+=(*t)->GetKineticEnergy()/GeV;
-
-            std::cout << "**"<<(*t)->GetParticleDefinition()->GetParticleName()
-                      << " ParentID: "<<(*t)->GetParentID()
-                      << " IsBelowThreshold: "<<(*t)->IsBelowThreshold()
-                      <<std::endl;
-            std::cout << " Etot: "<<(*t)->GetTotalEnergy()/GeV<<" Ek: "<<(*t)->GetKineticEnergy()/GeV//<<" p: "<<(*t)->GetMomentum()
-                      <<" v: "<<(*t)->GetVelocity()/299.792<<"c "<<" m: "<<  (*t)->GetParticleDefinition()->GetPDGMass()/GeV<<" GeV"
-                      <<std::endl;
-
-        }
-        std::cout << " Finish: ------------------------------ " << std::endl;
-            //std::cout<<"imbalance: "<<thePrePoint->GetTotalEnergy() / GeV - thePostPoint->GetTotalEnergy() / GeV - theStep->GetTotalEnergyDeposit() /GeV - sum_Etrans<<std::endl;
-            //CreateTree::Instance()->primary_Eimbalance->push_back(thePrePoint->GetTotalEnergy() / GeV - thePostPoint->GetTotalEnergy() / GeV - theStep->GetTotalEnergyDeposit() /GeV - sum_Etrans);
-
-}
-
-*/
 
   //------------- optical photon -------------
   if (particleType == G4OpticalPhoton::OpticalPhotonDefinition())
