@@ -176,11 +176,11 @@ int CreateTree::Fill()
   std::cout<<"depositedEnergyEscapeWorld is "<<depositedEnergyEscapeWorld<<std::endl;
   float sum = depositedEnergyTotal+depositedEnergyEscapeWorld;
   std::cout<<"sum is "<<sum<<std::endl;
-  std::cout<<"depositedEnergyEcalDet is "<<depositedEnergyECAL_f<<std::endl;
-  std::cout<<"depositedEnergyEcalDet is "<<depositedEnergyECAL_r<<std::endl;
-  //std::cout<<"depositedEnergyEcalGap is "<<depositedEnergyECALGap<<std::endl;
-  //std::cout<<"depositedEnergyEcalGap is "<<depositedEnergyECALDet<<std::endl;
-  //std::cout<<"depositedEnergyEcalGap is "<<depositedEnergyECALWorld<<std::endl;
+  std::cout<<"depositedEnergyEcal_f is "<<depositedEnergyECAL_f<<std::endl;
+  std::cout<<"depositedEnergyEcal_r is "<<depositedEnergyECAL_r<<std::endl;
+  std::cout<<"depositedEnergyEcalGap is "<<depositedEnergyEcalGap<<std::endl;
+  std::cout<<"depositedEnergyEcaldet is "<<depositedEnergyEcalDet<<std::endl;
+  std::cout<<"depositedEnergyEcalworld is "<<depositedEnergyWorld<<std::endl;
   float diff = depositedEnergyTotal - depositedEnergyECAL_f;
   std::cout<<"diff is "<<diff<<std::endl;
 
