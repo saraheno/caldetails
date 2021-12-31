@@ -126,7 +126,7 @@ DetectorConstruction::DetectorConstruction(const string &configFileName)
 
 
   CreateTree::Instance()->inputE1Thick = ecal_front_length;
-  CreateTree::Instance()->inputE2Thick = ecal_rear_length;
+
   CreateTree::Instance()->inputE1Width = ecal_front_face;
 
 }

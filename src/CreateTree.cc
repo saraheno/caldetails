@@ -23,7 +23,7 @@ CreateTree::CreateTree(TString name)
 
 
   this->GetTree()->Branch("inputE1Thick", &this->inputE1Thick, "inputE1Thick/F");
-  this->GetTree()->Branch("inputE2Thick", &this->inputE2Thick, "inputE2Thick/F");
+
   this->GetTree()->Branch("inputE1Width", &this->inputE1Width, "inputE1Width/F");
 
 
@@ -47,24 +47,23 @@ positionz_escape = new vector<float>;
   this->GetTree()->Branch("primaryPosE1", "vector<float>", &primaryPosE1);
   this->GetTree()->Branch("primaryMomE1", "vector<float>", &primaryMomE1);
 
-  this->GetTree()->Branch("nTracksT1", &this->nTracksT1, "nTracksT1/I");
-  this->GetTree()->Branch("nTracksT2", &this->nTracksT2, "nTracksT2/I");
+
   this->GetTree()->Branch("nTracksE1", &this->nTracksE1, "nTracksE1/I");
-  this->GetTree()->Branch("nTracksE2", &this->nTracksE2, "nTracksE2/I");
-  this->GetTree()->Branch("nTracksTRK", &this->nTracksTRK, "nTracksTRK[6]/F");
+
+
 
   //integrated per longitudinal layer
   this->GetTree()->Branch("depositedEnergyTotal", &this->depositedEnergyTotal, "depositedEnergyTotal/F");
   this->GetTree()->Branch("depositedEnergyEscapeWorld", &this->depositedEnergyEscapeWorld, "depositedEnergyEscapeWorld/F");
   this->GetTree()->Branch("depositedEnergyECAL_f", &this->depositedEnergyECAL_f, "depositedEnergyECAL_f/F");
-  this->GetTree()->Branch("depositedEnergyECAL_r", &this->depositedEnergyECAL_r, "depositedEnergyECAL_r/F");
+
   this->GetTree()->Branch("depositedEnergyWorld", &this->depositedEnergyWorld, "depositedEnergyWorld/F");
   this->GetTree()->Branch("depositedEnergyEcalGap", &this->depositedEnergyEcalGap, "depositedEnergyEcalGap/F");
   this->GetTree()->Branch("depositedEnergyEcalDet", &this->depositedEnergyEcalDet, "depositedEnergyEcalDet/F");
 
   this->GetTree()->Branch("depositedIonEnergyTotal", &this->depositedIonEnergyTotal, "depositedIonEnergyTotal/F");
   this->GetTree()->Branch("depositedIonEnergyECAL_f", &this->depositedIonEnergyECAL_f, "depositedIonEnergyECAL_f[3]/F");
-  this->GetTree()->Branch("depositedIonEnergyECAL_r", &this->depositedIonEnergyECAL_r, "depositedIonEnergyECAL_r[3]/F");
+
   this->GetTree()->Branch("depositedIonEnergyWorld", &this->depositedIonEnergyWorld, "depositedIonEnergyWorld/F");
   this->GetTree()->Branch("depositedIonEnergyEcalGap", &this->depositedIonEnergyEcalGap, "depositedIonEnergyEcalGap/F");
   this->GetTree()->Branch("depositedIonEnergyEcalDet", &this->depositedIonEnergyEcalDet, "depositedIonEnergyEcalDet/F");
@@ -77,7 +76,7 @@ positionz_escape = new vector<float>;
   this->GetTree()->Branch("depositedElecEnergyTotal", &this->depositedElecEnergyTotal, "depositedElecEnergyTotal/F");
   this->GetTree()->Branch("depositedHadronIonEnergyTotal", &this->depositedHadronIonEnergyTotal, "depositedHadronIonEnergyTotal/F");
   this->GetTree()->Branch("depositedElecEnergyECAL_f", &this->depositedElecEnergyECAL_f, "depositedElecEnergyECAL_f[3]/F");
-  this->GetTree()->Branch("depositedElecEnergyECAL_r", &this->depositedElecEnergyECAL_r, "depositedElecEnergyECAL_r[3]/F");
+
   this->GetTree()->Branch("depositedElecEnergyWorld", &this->depositedElecEnergyWorld, "depositedElecEnergyWorld/F");
   this->GetTree()->Branch("depositedElecEnergyEcalGap", &this->depositedElecEnergyEcalGap, "depositedElecEnergyEcalGap/F");
   this->GetTree()->Branch("depositedElecEnergyEcalDet", &this->depositedElecEnergyEcalDet, "depositedElecEnergyEcalDet/F");
@@ -177,7 +176,7 @@ int CreateTree::Fill()
   float sum = depositedEnergyTotal+depositedEnergyEscapeWorld;
   std::cout<<"sum is "<<sum<<std::endl;
   std::cout<<"depositedEnergyEcal_f is "<<depositedEnergyECAL_f<<std::endl;
-  std::cout<<"depositedEnergyEcal_r is "<<depositedEnergyECAL_r<<std::endl;
+
   std::cout<<"depositedEnergyEcalGap is "<<depositedEnergyEcalGap<<std::endl;
   std::cout<<"depositedEnergyEcaldet is "<<depositedEnergyEcalDet<<std::endl;
   std::cout<<"depositedEnergyEcalworld is "<<depositedEnergyWorld<<std::endl;
@@ -245,15 +244,11 @@ void CreateTree::Clear()
 {
   Event = 0;
 
-  nTracksT1 = 0;
-  nTracksT2 = 0;
-  nTracksE1 = 0;
-  nTracksE2 = 0;
 
-  for (int iLayer = 0; iLayer < 6; iLayer++)
-  {
-    nTracksTRK[iLayer] = 0;
-  }
+  nTracksE1 = 0;
+
+
+
 
   depositedEnergyEscapeWorld = 0.;
   depositedTotalEnergyEscapeWorld = 0.;
@@ -261,7 +256,7 @@ void CreateTree::Clear()
   depositedEnergyTotal = 0.;
 
     depositedEnergyECAL_f = 0.;
-    depositedEnergyECAL_r = 0.;
+
 
   depositedEnergyWorld = 0.;
   depositedEnergyEcalGap = 0.;
@@ -270,7 +265,7 @@ void CreateTree::Clear()
   depositedIonEnergyTotal = 0.;
 
     depositedIonEnergyECAL_f = 0.;
-    depositedIonEnergyECAL_r = 0.;
+
 
   depositedIonEnergyWorld = 0.;
   depositedIonEnergyEcalGap = 0.;
@@ -280,7 +275,7 @@ void CreateTree::Clear()
   depositedHadronIonEnergyTotal = 0.;
 
     depositedElecEnergyECAL_f = 0.;
-    depositedElecEnergyECAL_r = 0.;
+
 
   depositedElecEnergyWorld = 0.;
   depositedElecEnergyEcalGap = 0.;
@@ -300,11 +295,11 @@ void CreateTree::Clear()
   for (int iparticle = 0; iparticle < 8; iparticle++)
   {
     depositedEnergyECAL_absorb_f_particleID[iparticle] = 0.;
-    depositedEnergyECAL_absorb_r_particleID[iparticle] = 0.;
+
     depositedEnergyECAL_scinti_f_particleID[iparticle] = 0.;
-    depositedEnergyECAL_scinti_r_particleID[iparticle] = 0.;
+
     depositedEnergyECAL_cheren_f_particleID[iparticle] = 0.;
-    depositedEnergyECAL_cheren_r_particleID[iparticle] = 0.;
+
 
     
     depositedIonEnergyECAL_absorb_f_particleID[iparticle] = 0.;

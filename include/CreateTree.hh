@@ -40,7 +40,6 @@ public:
 
 
   int inputE1Thick;
-  int inputE2Thick;
   int inputE1Width;
 
 
@@ -53,11 +52,9 @@ public:
   std::vector<float> *primaryMomE1; // Px Py Pz E
   std::vector<float> *primaryPosE1; // x, y, z
 
-  int nTracksT1;
-  int nTracksT2;
   int nTracksE1;
-  int nTracksE2;
-  int nTracksTRK[6];
+
+
 
   //integrated energy in each longitudinal layer
   float depositedEnergyEscapeWorld;
@@ -65,14 +62,14 @@ public:
 
   float depositedEnergyTotal;
   float depositedEnergyECAL_f;
-  float depositedEnergyECAL_r;
+
   float depositedEnergyEcalGap;
   float depositedEnergyEcalDet;
   float depositedEnergyWorld;
 
   float depositedIonEnergyTotal;
   float depositedIonEnergyECAL_f;
-  float depositedIonEnergyECAL_r;
+
   float depositedIonEnergyEcalGap;
   float depositedIonEnergyEcalDet;
   float depositedIonEnergyWorld;
@@ -80,7 +77,7 @@ public:
   float depositedElecEnergyTotal;
   float depositedHadronIonEnergyTotal;
   float depositedElecEnergyECAL_f;
-  float depositedElecEnergyECAL_r;
+
   float depositedElecEnergyEcalGap;
   float depositedElecEnergyEcalDet;
   float depositedElecEnergyWorld;
@@ -88,12 +85,12 @@ public:
   //store the energy deposition by components
 
   float depositedEnergyECAL_absorb_f_particleID[8];
-  float depositedEnergyECAL_absorb_r_particleID[8];
+
   float depositedIonEnergyECAL_absorb_f_particleID[8];
   float betaparticleID[8];
   float Ninelastic;
   float depositedEnergyECAL_scinti_f_particleID[8];
-  float depositedEnergyECAL_scinti_r_particleID[8];
+
   float depositedIonEnergyECAL_scinti_f_particleID[8];
   float depositedIonEnergyECAL_scinti_r_particleID[8];
 
