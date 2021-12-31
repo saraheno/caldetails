@@ -100,6 +100,7 @@ positionz_escape = new vector<float>;
 
 
   // basic plots
+  h_totaliondepositedE = new TH1F("h_totaliondepositedE","",150,0.,1.5);
   h_totaldepositedE = new TH1F("h_totaldepositedE","",150,0.,1.5);
   h_totalpkineticenergyescape = new TH1F("h_totalpkineticenergyescape","",150,0.,1.5);
   pdg_ke = new TH2F("pdg_ke","",10000,-5000,5000,100,0,10.);
@@ -179,11 +180,9 @@ int CreateTree::Fill()
   std::cout<<"diff is "<<diff<<std::endl;
 
 
-  float aaa=depositedEnergyTotal/(inputMomentum->at(3));
-  float bbb=(depositedEnergyTotal+kineticEnergyEscapeWorld)/(inputMomentum->at(3));
-
-  h_totaldepositedE->Fill( aaa );
-  h_totalpkineticenergyescape->Fill(bbb);
+  h_totaliondepositedE->Fill( depositedIonEnergyTotal/(inputMomentum->at(3)) );
+  h_totaldepositedE->Fill( depositedEnergyTotal/(inputMomentum->at(3)) );
+  h_totalpkineticenergyescape->Fill((depositedEnergyTotal+kineticEnergyEscapeWorld)/(inputMomentum->at(3)));
 
 
 
@@ -230,6 +229,7 @@ bool CreateTree::Write(TFile *outfile)
 
   pdg_ke->Write();
   h_totaldepositedE->Write();
+  h_totaliondepositedE->Write();
   h_totalpkineticenergyescape->Write();
 
 
