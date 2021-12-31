@@ -306,18 +306,14 @@ void CreateTree::Clear()
 
 
 
-    tot_phot_cer_ECAL_scinti_r_particleID[iparticle] = 0.;
+
 
     tot_phot_cer_ECAL_cheren_r_particleID[iparticle] = 0.;
   }
 
 
 
-  for (int iBar = 0; iBar < 18; iBar++)
-  {
-    Edep_Timing_f_ch[iBar] = 0.;
-    Edep_Timing_r_ch[iBar] = 0.;
-  }
+
   for (int iCh = 0; iCh < 6400; iCh++)
   {
     Edep_ECAL_f_ch[iCh] = 0.;

@@ -97,7 +97,7 @@ public:
   int ECAL_f_total_C;
   int ECAL_r_total_C;
 
-  int tot_phot_cer_ECAL_scinti_r_particleID[8];
+
   int tot_phot_cer_ECAL_cheren_f_total;
   int tot_phot_cer_ECAL_cheren_r_total;
   int tot_phot_cer_ECAL_cheren_f_particleID[8];
@@ -112,8 +112,6 @@ public:
 
 
   //energy deposit in each trasnversally segmented channel
-  float Edep_Timing_f_ch[18];
-  float Edep_Timing_r_ch[18];
 
   float Edep_ECAL_f_ch[6400];
   float Edep_ECAL_r_ch[6400];
