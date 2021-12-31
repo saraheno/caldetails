@@ -320,7 +320,7 @@ void CreateTree::Clear()
     Edep_ECAL_r_ch[iCh] = 0.;
 
     IonEdep_ECAL_f_ch[iCh] = 0.;
-    IonEdep_ECAL_r_ch[iCh] = 0.;
+
 
   }
 

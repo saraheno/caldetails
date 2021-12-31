@@ -117,7 +117,7 @@ public:
   float Edep_ECAL_r_ch[6400];
 
   float IonEdep_ECAL_f_ch[6400];
-  float IonEdep_ECAL_r_ch[6400];
+
 
   float E_Zdep_0to5000mm_total[2500];
   float E_Tdep_0to5ns_total[2500];
