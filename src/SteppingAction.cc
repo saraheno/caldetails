@@ -147,7 +147,7 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
   G4double energyIonElectron = 0.;
   G4double energyIonPhoton = 0.;
   G4double energyIonPion_p = 0.;
-  G4double energyIonKion = 0.;
+  G4double energyIonKaon = 0.;
   G4double energyIonNeutron = 0.;
   G4double energyIonProton = 0.;
 
@@ -179,7 +179,7 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
   else if (TrPDGid == (321))
   {
     energyKaon = energy;
-    energyIonKion = energyIon;
+    energyIonKaon = energyIon;
   }
   else if (TrPDGid == (2112))
   {
@@ -205,8 +205,8 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
   }
 
 //if(nStep == 1) CreateTree::Instance()->pdg_beta->Fill(TrPDGid,theTrack->GetVelocity()/299.792,);
-CreateTree::Instance()->pdg_beta->Fill(TrPDGid,thePrePoint->GetBeta(),energyIon / GeV);
- CreateTree::Instance()->pdg_ke->Fill(TrPDGid,thePrePoint->GetKineticEnergy(),energyIon / GeV);
+  CreateTree::Instance()->pdg_beta->Fill(TrPDGid,thePrePoint->GetBeta(),energyIon / GeV);
+  CreateTree::Instance()->pdg_ke->Fill(TrPDGid,thePrePoint->GetKineticEnergy(),energyIon / GeV);
 
 //if(TrPDGid>=111) cout<<energyIon / GeV<<endl;
 
@@ -217,40 +217,40 @@ CreateTree::Instance()->pdg_beta->Fill(TrPDGid,thePrePoint->GetBeta(),energyIon 
   }
 
 
-if(abs(TrPDGid)==22){
+  if(abs(TrPDGid)==22){
     CreateTree::Instance()->ion_z->Fill(global_z, energyIon);
-}
-if(abs(TrPDGid)==22 || abs(TrPDGid)==11){
+  }
+  if(abs(TrPDGid)==22 || abs(TrPDGid)==11){
     CreateTree::Instance()->h_time_z_egamma->Fill(global_z,thePostPoint->GetGlobalTime() / ns - (global_z+1500) / 300.,energy / GeV);
-}else{
+  }else{
     CreateTree::Instance()->h_time_z_other->Fill(global_z,thePostPoint->GetGlobalTime() / ns - (global_z+1500) / 300.,energy / GeV);
-}
-    double inter_len = 223; //mm
-    CreateTree::Instance()->ion_rz->Fill(sqrt(global_x*global_x+global_y*global_y), global_z, energyIon);
-    if(global_z>-1500 && global_z<-1500 + inter_len) CreateTree::Instance()->ion_r1->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
-    if(global_z>-1500 + inter_len && global_z<-1500 + inter_len*2) CreateTree::Instance()->ion_r2->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
-    if(global_z>-1500 + inter_len*2 && global_z<-1500 + inter_len*3) CreateTree::Instance()->ion_r3->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
-    if(global_z>-1500 + inter_len*3 && global_z<-1500 + inter_len*4) CreateTree::Instance()->ion_r4->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
-    if(global_z>-1500 + inter_len*4 && global_z<-1500 + inter_len*5) CreateTree::Instance()->ion_r5->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
-    if(global_z>-1500 + inter_len*5 && global_z<-1500 + inter_len*6) CreateTree::Instance()->ion_r6->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
-    if(global_z>-1500 + inter_len*6 && global_z<-1500 + inter_len*7) CreateTree::Instance()->ion_r7->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
+  }
+  double inter_len = 223; //mm
+  CreateTree::Instance()->ion_rz->Fill(sqrt(global_x*global_x+global_y*global_y), global_z, energyIon);
+  if(global_z>-1500 && global_z<-1500 + inter_len) CreateTree::Instance()->ion_r1->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
+  if(global_z>-1500 + inter_len && global_z<-1500 + inter_len*2) CreateTree::Instance()->ion_r2->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
+  if(global_z>-1500 + inter_len*2 && global_z<-1500 + inter_len*3) CreateTree::Instance()->ion_r3->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
+  if(global_z>-1500 + inter_len*3 && global_z<-1500 + inter_len*4) CreateTree::Instance()->ion_r4->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
+  if(global_z>-1500 + inter_len*4 && global_z<-1500 + inter_len*5) CreateTree::Instance()->ion_r5->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
+  if(global_z>-1500 + inter_len*5 && global_z<-1500 + inter_len*6) CreateTree::Instance()->ion_r6->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
+  if(global_z>-1500 + inter_len*6 && global_z<-1500 + inter_len*7) CreateTree::Instance()->ion_r7->Fill(sqrt(global_x*global_x+global_y*global_y),energyIon);
 
   bool outworld = ((theStep->GetPostStepPoint())->GetStepStatus()) == fWorldBoundary;
   if (outworld)
-  {
-  CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetKineticEnergy()/GeV;
-  CreateTree::Instance()->depositedTotalEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV;
-  CreateTree::Instance()->pdgid_escape->push_back( TrPDGid);
-  CreateTree::Instance()->KineticEnergy_escape->push_back((theStep->GetPostStepPoint())->GetKineticEnergy() / GeV);
-  CreateTree::Instance()->positionx_escape->push_back(thePostPosition.x() / mm);
-  CreateTree::Instance()->positiony_escape->push_back(thePostPosition.y() / mm);
-  CreateTree::Instance()->positionz_escape->push_back(thePostPosition.z() / mm);
-  }
+    {
+      CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetKineticEnergy()/GeV;
+      CreateTree::Instance()->depositedTotalEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV;
+      CreateTree::Instance()->pdgid_escape->push_back( TrPDGid);
+      CreateTree::Instance()->KineticEnergy_escape->push_back((theStep->GetPostStepPoint())->GetKineticEnergy() / GeV);
+      CreateTree::Instance()->positionx_escape->push_back(thePostPosition.x() / mm);
+      CreateTree::Instance()->positiony_escape->push_back(thePostPosition.y() / mm);
+      CreateTree::Instance()->positionz_escape->push_back(thePostPosition.z() / mm);
+    }
 
 
   //------------- optical photon -------------
   if (particleType == G4OpticalPhoton::OpticalPhotonDefinition())
-  {
+    {
     //if optics
     G4String processName = theTrack->GetCreatorProcess()->GetProcessName();
     float photWL = MyMaterials::fromEvToNm(theTrack->GetTotalEnergy() / eV);
@@ -435,7 +435,7 @@ if(abs(TrPDGid)==22 || abs(TrPDGid)==11){
         CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[4] += energyIonPion_p / GeV;
 
         CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[5] += energyKaon / GeV;
-        CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[5] += energyIonKion / GeV;
+        CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[5] += energyIonKaon / GeV;
 
         CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[6] += energyNeutron / GeV;
         CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[6] += energyIonNeutron / GeV;

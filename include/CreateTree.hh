@@ -131,8 +131,8 @@ public:
   float E_Tdep_0to5ns_Photon[2500];
   float E_Zdep_0to5000mm_Pion_p[2500];
   float E_Tdep_0to5ns_Pion_p[2500];
-  float E_Zdep_0to5000mm_Kion[2500];
-  float E_Tdep_0to5ns_Kion[2500];
+  float E_Zdep_0to5000mm_Kaon[2500];
+  float E_Tdep_0to5ns_Kaon[2500];
   float E_Zdep_0to5000mm_Neutron[2500];
   float E_Tdep_0to5ns_Neutron[2500];
   float E_Zdep_0to5000mm_Proton[2500];

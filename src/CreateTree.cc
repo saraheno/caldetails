@@ -332,7 +332,7 @@ void CreateTree::Clear()
     E_Zdep_0to5000mm_Electron[iZ]=0.;
     E_Zdep_0to5000mm_Photon[iZ]=0.;
     E_Zdep_0to5000mm_Pion_p[iZ]=0.;
-    E_Zdep_0to5000mm_Kion[iZ]=0.;
+    E_Zdep_0to5000mm_Kaon[iZ]=0.;
     E_Zdep_0to5000mm_Neutron[iZ]=0.;
     E_Zdep_0to5000mm_Proton[iZ]=0.;
   }
