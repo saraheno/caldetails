@@ -62,21 +62,18 @@ public:
 
   float depositedEnergyTotal;
   float depositedEnergyECAL_f;
-  float depositedEnergyEcalGap;
-  float depositedEnergyEcalDet;
+  float depositedEnergyWrap;
   float depositedEnergyWorld;
 
   float depositedIonEnergyTotal;
   float depositedIonEnergyECAL_f;
-  float depositedIonEnergyEcalGap;
-  float depositedIonEnergyEcalDet;
+  float depositedIonEnergyWrap;
   float depositedIonEnergyWorld;
 
   float depositedElecEnergyTotal;
   float depositedHadronIonEnergyTotal;
   float depositedElecEnergyECAL_f;
-  float depositedElecEnergyEcalGap;
-  float depositedElecEnergyEcalDet;
+  float depositedElecEnergyWrap;
   float depositedElecEnergyWorld;
 
   //store the energy deposition by components

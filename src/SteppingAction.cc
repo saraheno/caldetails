@@ -374,7 +374,9 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
   }
   else
   {
-
+    if(thePrePVName!="ecalCrystalP_f_0"&&thePrePVName!="worldPV"&&
+       thePrePVName!="ecalWrapperP_f_0")
+    std::cout<<"prepvname is "<<thePrePVName<<std::endl;
     //count tracks before SCEPCAL at the tracker layers
 
     if ((thePrePVName.contains("world") || thePrePVName.contains("ecalGapP_f") || thePrePVName.contains("ecalDetP_f")) && thePostPVName.contains("ecalCrystalP_f") // interface between world and E1
@@ -412,38 +414,35 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
         }
       }
 
-      if (thePrePVName.contains("ecalCrystalP_f"))
-      {
+      CreateTree::Instance()->depositedEnergyECAL_f += energy / GeV;
+      CreateTree::Instance()->depositedIonEnergyECAL_f += energyIon / GeV;
+      CreateTree::Instance()->depositedElecEnergyECAL_f += energyElec / GeV;
 
-        CreateTree::Instance()->depositedEnergyECAL_f += energy / GeV;
-        CreateTree::Instance()->depositedIonEnergyECAL_f += energyIon / GeV;
-        CreateTree::Instance()->depositedElecEnergyECAL_f += energyElec / GeV;
+      CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[0] += energyPion_n / GeV;
+      CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[0] += energyIonPion_n / GeV;
 
-        CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[0] += energyPion_n / GeV;
-        CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[0] += energyIonPion_n / GeV;
+      CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[1] += energyPositron / GeV;
+      CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[1] += energyIonPositron / GeV;
+      
+      CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[2] += energyElectron / GeV;
+      CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[2] += energyIonElectron / GeV;
 
-        CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[1] += energyPositron / GeV;
-        CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[1] += energyIonPositron / GeV;
+      CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[3] += energyPhoton / GeV;
+      CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[3] += energyIonPhoton / GeV;
 
-        CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[2] += energyElectron / GeV;
-        CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[2] += energyIonElectron / GeV;
+      CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[4] += energyPion_p / GeV;
+      CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[4] += energyIonPion_p / GeV;
 
-        CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[3] += energyPhoton / GeV;
-        CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[3] += energyIonPhoton / GeV;
+      CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[5] += energyKaon / GeV;
+      CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[5] += energyIonKaon / GeV;
 
-        CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[4] += energyPion_p / GeV;
-        CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[4] += energyIonPion_p / GeV;
+      CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[6] += energyNeutron / GeV;
+      CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[6] += energyIonNeutron / GeV;
 
-        CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[5] += energyKaon / GeV;
-        CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[5] += energyIonKaon / GeV;
-
-        CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[6] += energyNeutron / GeV;
-        CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[6] += energyIonNeutron / GeV;
-
-        CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[7] += energyProton / GeV;
-        CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[7] += energyIonProton / GeV;
-      }
+      CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[7] += energyProton / GeV;
+      CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[7] += energyIonProton / GeV;
     }
+    
 
 
     if (thePrePVName.contains("world"))
@@ -454,19 +453,15 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
     }
 
 
-    if (thePrePVName.contains("ecalGap"))
+
+    if (thePrePVName.contains("Wrap"))
     {
-      CreateTree::Instance()->depositedEnergyEcalGap += energy / GeV;
-      CreateTree::Instance()->depositedIonEnergyEcalGap += energyIon / GeV;
-      CreateTree::Instance()->depositedElecEnergyEcalGap += energyElec / GeV;
+      CreateTree::Instance()->depositedEnergyWrap += energy / GeV;
+      CreateTree::Instance()->depositedIonEnergyWrap += energyIon / GeV;
+      CreateTree::Instance()->depositedElecEnergyWrap += energyElec / GeV;
     }
 
-    if (thePrePVName.contains("ecalDet"))
-    {
-      CreateTree::Instance()->depositedEnergyEcalDet += energy / GeV;
-      CreateTree::Instance()->depositedIonEnergyEcalDet += energyIon / GeV;
-      CreateTree::Instance()->depositedElecEnergyEcalDet += energyElec / GeV;
-    }
+
 
 
     //G4cout << ">>> end non optical photon" << G4endl;

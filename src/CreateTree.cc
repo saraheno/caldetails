@@ -56,17 +56,16 @@ positionz_escape = new vector<float>;
   this->GetTree()->Branch("depositedEnergyTotal", &this->depositedEnergyTotal, "depositedEnergyTotal/F");
   this->GetTree()->Branch("depositedEnergyEscapeWorld", &this->depositedEnergyEscapeWorld, "depositedEnergyEscapeWorld/F");
   this->GetTree()->Branch("depositedEnergyECAL_f", &this->depositedEnergyECAL_f, "depositedEnergyECAL_f/F");
+  this->GetTree()->Branch("depositedEnergyWrap", &this->depositedEnergyWrap, "depositedEnergyWrap/F");
 
   this->GetTree()->Branch("depositedEnergyWorld", &this->depositedEnergyWorld, "depositedEnergyWorld/F");
-  this->GetTree()->Branch("depositedEnergyEcalGap", &this->depositedEnergyEcalGap, "depositedEnergyEcalGap/F");
-  this->GetTree()->Branch("depositedEnergyEcalDet", &this->depositedEnergyEcalDet, "depositedEnergyEcalDet/F");
 
   this->GetTree()->Branch("depositedIonEnergyTotal", &this->depositedIonEnergyTotal, "depositedIonEnergyTotal/F");
 
 
+  this->GetTree()->Branch("depositedIonEnergyECAL_f", &this->depositedIonEnergyECAL_f, "depositedIonEnergyECAL_f/F");
   this->GetTree()->Branch("depositedIonEnergyWorld", &this->depositedIonEnergyWorld, "depositedIonEnergyWorld/F");
-  this->GetTree()->Branch("depositedIonEnergyEcalGap", &this->depositedIonEnergyEcalGap, "depositedIonEnergyEcalGap/F");
-  this->GetTree()->Branch("depositedIonEnergyEcalDet", &this->depositedIonEnergyEcalDet, "depositedIonEnergyEcalDet/F");
+  this->GetTree()->Branch("depositedIonEnergyWrap", &this->depositedIonEnergyWrap, "depositedIonEnergyWrap/F");
   this->GetTree()->Branch("depositedIonEnergyECAL_absorb_f_particleID", &this->depositedIonEnergyECAL_absorb_f_particleID, "depositedIonEnergyECAL_absorb_f_particleID[8]/F");
   this->GetTree()->Branch("betaparticleID", &this->betaparticleID, "betaparticleID[8]/F");
   this->GetTree()->Branch("depositedEnergyECAL_absorb_f_particleID", &this->depositedEnergyECAL_absorb_f_particleID, "depositedEnergyECAL_absorb_f_particleID[8]/F");
@@ -78,8 +77,7 @@ positionz_escape = new vector<float>;
   this->GetTree()->Branch("depositedElecEnergyECAL_f", &this->depositedElecEnergyECAL_f, "depositedElecEnergyECAL_f[3]/F");
 
   this->GetTree()->Branch("depositedElecEnergyWorld", &this->depositedElecEnergyWorld, "depositedElecEnergyWorld/F");
-  this->GetTree()->Branch("depositedElecEnergyEcalGap", &this->depositedElecEnergyEcalGap, "depositedElecEnergyEcalGap/F");
-  this->GetTree()->Branch("depositedElecEnergyEcalDet", &this->depositedElecEnergyEcalDet, "depositedElecEnergyEcalDet/F");
+  this->GetTree()->Branch("depositedElecEnergyWrap", &this->depositedElecEnergyWrap, "depositedElecEnergyWrap/F");
 
 
   //Cerenkov photons
@@ -174,12 +172,11 @@ int CreateTree::Fill()
   std::cout<<"depositedEnergyEscapeWorld is "<<depositedEnergyEscapeWorld<<std::endl;
   float sum = depositedEnergyTotal+depositedEnergyEscapeWorld;
   std::cout<<"sum is "<<sum<<std::endl;
-  std::cout<<"depositedEnergyEcal_f is "<<depositedEnergyECAL_f<<std::endl;
+  std::cout<<"depositedEnergyECAL_f is "<<depositedEnergyECAL_f<<std::endl;
+  std::cout<<"depositedEnergyWrap is "<<depositedEnergyWrap<<std::endl;
 
-  std::cout<<"depositedEnergyEcalGap is "<<depositedEnergyEcalGap<<std::endl;
-  std::cout<<"depositedEnergyEcaldet is "<<depositedEnergyEcalDet<<std::endl;
-  std::cout<<"depositedEnergyEcalworld is "<<depositedEnergyWorld<<std::endl;
-  float diff = depositedEnergyTotal - depositedEnergyECAL_f;
+  std::cout<<"depositedEnergyworld is "<<depositedEnergyWorld<<std::endl;
+  float diff = depositedEnergyTotal - depositedEnergyECAL_f-depositedEnergyWrap;
   std::cout<<"diff is "<<diff<<std::endl;
 
   h_totaldepositedE->Fill(depositedEnergyTotal);
@@ -254,31 +251,20 @@ void CreateTree::Clear()
 
   depositedEnergyTotal = 0.;
 
-    depositedEnergyECAL_f = 0.;
-
-
+  depositedEnergyECAL_f = 0.;
   depositedEnergyWorld = 0.;
-  depositedEnergyEcalGap = 0.;
-  depositedEnergyEcalDet = 0.;
+  depositedEnergyWrap = 0.;
+
 
   depositedIonEnergyTotal = 0.;
-
-
-
-
+  depositedIonEnergyECAL_f = 0.;
   depositedIonEnergyWorld = 0.;
-  depositedIonEnergyEcalGap = 0.;
-  depositedIonEnergyEcalDet = 0.;
-
-  depositedElecEnergyTotal = 0.;
+  depositedIonEnergyWrap = 0.;
   depositedHadronIonEnergyTotal = 0.;
 
-    depositedElecEnergyECAL_f = 0.;
-
-
+  depositedElecEnergyECAL_f = 0.;
   depositedElecEnergyWorld = 0.;
-  depositedElecEnergyEcalGap = 0.;
-  depositedElecEnergyEcalDet = 0.;
+  depositedElecEnergyWrap = 0.;
 
 
   ECAL_f_total_C = 0.;
