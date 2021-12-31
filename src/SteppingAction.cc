@@ -266,52 +266,10 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
         TrackInformation *theTrackInfo = (TrackInformation *)(theTrack->GetUserInformation());
         G4int aapdgid = theTrackInfo->GetParentPDGid();
         //if (thePostPVName.contains("ecalDetWindowP_ff_"))
-        if ((thePostPVName.contains("ecalGapP_ff_")))
-        {
-          if (processName == "Scintillation")
-          {
-            CreateTree::Instance()->h_photon_2D_receive_Scin->Fill(theTrack->GetVertexPosition()[1], theTrack->GetVertexPosition()[2]);
-            CreateTree::Instance()->h_phot_lambda_ECAL_f_Scin->Fill(photWL);
-            CreateTree::Instance()->SDdetected_ff_S++;
-            CreateTree::Instance()->h_phot_detect_time_f_Scin->Fill(thePostPoint->GetGlobalTime() / ns);
-          }
-          if (processName == "Cerenkov")
-          {
-            CreateTree::Instance()->h_photon_2D_receive_Ceren->Fill(theTrack->GetVertexPosition()[1], theTrack->GetVertexPosition()[2]);
-            CreateTree::Instance()->h_phot_lambda_ECAL_f_Ceren->Fill(photWL);
-            CreateTree::Instance()->SDdetected_ff_C++;
-            CreateTree::Instance()->h_phot_detect_time_f_Ceren->Fill(thePostPoint->GetGlobalTime() / ns);
-          }
-          theTrack->SetTrackStatus(fKillTrackAndSecondaries);
-        }
-        //else if (thePostPVName.contains("ecalDetWindowP_fr_"))
-        else if (thePostPVName.contains("ecalGapP_fr_"))
-        {
-          if (processName == "Scintillation")
-          {
-            CreateTree::Instance()->h_photon_2D_receive_Scin->Fill(theTrack->GetVertexPosition()[1], theTrack->GetVertexPosition()[2]);
-            CreateTree::Instance()->h_phot_lambda_ECAL_r_Scin->Fill(photWL);
-            CreateTree::Instance()->SDdetected_rr_S++;
-            CreateTree::Instance()->h_phot_detect_time_r_Scin->Fill(thePostPoint->GetGlobalTime() / ns);
-          }
-          if (processName == "Cerenkov")
-          {
-            CreateTree::Instance()->h_photon_2D_receive_Ceren->Fill(theTrack->GetVertexPosition()[1], theTrack->GetVertexPosition()[2]);
-            CreateTree::Instance()->h_phot_lambda_ECAL_r_Ceren->Fill(photWL);
-            CreateTree::Instance()->SDdetected_rr_C++;
-            CreateTree::Instance()->h_phot_detect_time_r_Ceren->Fill(thePostPoint->GetGlobalTime() / ns);
-          }
-          theTrack->SetTrackStatus(fKillTrackAndSecondaries);
-        }
-
 
         if (thePrePVName.contains("world"))
         {
           //theTrack->SetTrackStatus(fKillTrackAndSecondaries);
-        }
-        else if (thePrePVName.contains("ecalGapP"))
-        {
-          //std::cout << "in Gap " << thePrePVName << std::endl;
         }
         else if (thePrePVName.contains("wrap"))
         {
@@ -372,7 +330,7 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
       }
     }
   }
-  else
+  else  // not optical photons
   {
     if(thePrePVName!="ecalCrystalP_f_0"&&thePrePVName!="worldPV"&&
        thePrePVName!="ecalWrapperP_f_0")
