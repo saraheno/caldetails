@@ -176,7 +176,7 @@ int CreateTree::Fill()
   std::cout<<"depositedEnergyWrap is "<<depositedEnergyWrap<<std::endl;
 
   std::cout<<"depositedEnergyworld is "<<depositedEnergyWorld<<std::endl;
-  float diff = depositedEnergyTotal - depositedEnergyECAL_f-depositedEnergyWrap;
+  float diff = depositedEnergyTotal - depositedEnergyECAL_f-depositedEnergyWrap-depositedEnergyEscapeWorld;
   std::cout<<"diff is "<<diff<<std::endl;
 
   h_totaldepositedE->Fill(depositedEnergyTotal);
