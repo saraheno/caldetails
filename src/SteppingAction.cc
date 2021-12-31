@@ -238,8 +238,8 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
   bool outworld = ((theStep->GetPostStepPoint())->GetStepStatus()) == fWorldBoundary;
   if (outworld)
     {
-      CreateTree::Instance()->depositedEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetKineticEnergy()/GeV;
-      CreateTree::Instance()->depositedTotalEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV;
+      CreateTree::Instance()->kineticEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetKineticEnergy()/GeV;
+      CreateTree::Instance()->TotalEnergyEscapeWorld+=(theStep->GetPostStepPoint())->GetTotalEnergy()/GeV;
       CreateTree::Instance()->pdgid_escape->push_back( TrPDGid);
       CreateTree::Instance()->KineticEnergy_escape->push_back((theStep->GetPostStepPoint())->GetKineticEnergy() / GeV);
       CreateTree::Instance()->positionx_escape->push_back(thePostPosition.x() / mm);

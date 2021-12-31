@@ -54,7 +54,7 @@ positionz_escape = new vector<float>;
 
   //integrated per longitudinal layer
   this->GetTree()->Branch("depositedEnergyTotal", &this->depositedEnergyTotal, "depositedEnergyTotal/F");
-  this->GetTree()->Branch("depositedEnergyEscapeWorld", &this->depositedEnergyEscapeWorld, "depositedEnergyEscapeWorld/F");
+  this->GetTree()->Branch("kineticEnergyEscapeWorld", &this->kineticEnergyEscapeWorld, "kineticEnergyEscapeWorld/F");
   this->GetTree()->Branch("depositedEnergyECAL_f", &this->depositedEnergyECAL_f, "depositedEnergyECAL_f/F");
   this->GetTree()->Branch("depositedEnergyWrap", &this->depositedEnergyWrap, "depositedEnergyWrap/F");
 
@@ -101,7 +101,7 @@ positionz_escape = new vector<float>;
 
   // basic plots
   h_totaldepositedE = new TH1F("h_totaldepositedE","",100,0.,10.);
-  h_totaldepositedEpescapeke = new TH1F("h_totaldepositedEpescapeke","",100,0.,10.);
+  h_kineticenergyescape = new TH1F("h_kineticenergyescape","",100,0.,10.);
   pdg_ke = new TH2F("pdg_ke","",10000,-5000,5000,100,0,10.);
 
 
@@ -169,18 +169,17 @@ int CreateTree::Fill()
 //  this->GetTree()->Write(NULL, TObject::kOverwrite );
 
   std::cout<<"depositedEnergyTotal is "<<depositedEnergyTotal<<std::endl;
-  std::cout<<"depositedEnergyEscapeWorld is "<<depositedEnergyEscapeWorld<<std::endl;
-  float sum = depositedEnergyTotal+depositedEnergyEscapeWorld;
+  std::cout<<"kineticEnergyEscapeWorld is "<<kineticEnergyEscapeWorld<<std::endl;
+  float sum = depositedEnergyTotal+kineticEnergyEscapeWorld;
   std::cout<<"sum is "<<sum<<std::endl;
   std::cout<<"depositedEnergyECAL_f is "<<depositedEnergyECAL_f<<std::endl;
   std::cout<<"depositedEnergyWrap is "<<depositedEnergyWrap<<std::endl;
-
   std::cout<<"depositedEnergyworld is "<<depositedEnergyWorld<<std::endl;
-  float diff = depositedEnergyTotal - depositedEnergyECAL_f-depositedEnergyWrap-depositedEnergyEscapeWorld;
+  float diff = depositedEnergyTotal - depositedEnergyECAL_f-depositedEnergyWrap;
   std::cout<<"diff is "<<diff<<std::endl;
 
   h_totaldepositedE->Fill(depositedEnergyTotal);
-  h_totaldepositedEpescapeke->Fill(depositedEnergyTotal+depositedEnergyEscapeWorld);
+  h_kineticenergyescape->Fill(depositedEnergyTotal+kineticEnergyEscapeWorld);
 
 
 
@@ -227,7 +226,7 @@ bool CreateTree::Write(TFile *outfile)
 
   pdg_ke->Write();
   h_totaldepositedE->Write();
-  h_totaldepositedEpescapeke->Write();
+  h_kineticenergyescape->Write();
 
 
 
@@ -246,8 +245,8 @@ void CreateTree::Clear()
 
 
 
-  depositedEnergyEscapeWorld = 0.;
-  depositedTotalEnergyEscapeWorld = 0.;
+  kineticEnergyEscapeWorld = 0.;
+  TotalEnergyEscapeWorld = 0.;
 
   depositedEnergyTotal = 0.;
 

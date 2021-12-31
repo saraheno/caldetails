@@ -57,8 +57,8 @@ public:
 
 
   //integrated energy in each longitudinal layer
-  float depositedEnergyEscapeWorld;
-  float depositedTotalEnergyEscapeWorld;
+  float kineticEnergyEscapeWorld;
+  float TotalEnergyEscapeWorld;
 
   float depositedEnergyTotal;
   float depositedEnergyECAL_f;
@@ -171,7 +171,7 @@ public:
   TH1F *inelasticEK;
 
   TH1F *h_totaldepositedE;
-  TH1F *h_totaldepositedEpescapeke;
+  TH1F *h_kineticenergyescape;
 
 
 
