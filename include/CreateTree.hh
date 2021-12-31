@@ -62,14 +62,12 @@ public:
 
   float depositedEnergyTotal;
   float depositedEnergyECAL_f;
-
   float depositedEnergyEcalGap;
   float depositedEnergyEcalDet;
   float depositedEnergyWorld;
 
   float depositedIonEnergyTotal;
   float depositedIonEnergyECAL_f;
-
   float depositedIonEnergyEcalGap;
   float depositedIonEnergyEcalDet;
   float depositedIonEnergyWorld;
@@ -77,7 +75,6 @@ public:
   float depositedElecEnergyTotal;
   float depositedHadronIonEnergyTotal;
   float depositedElecEnergyECAL_f;
-
   float depositedElecEnergyEcalGap;
   float depositedElecEnergyEcalDet;
   float depositedElecEnergyWorld;
@@ -85,19 +82,14 @@ public:
   //store the energy deposition by components
 
   float depositedEnergyECAL_absorb_f_particleID[8];
-
   float depositedIonEnergyECAL_absorb_f_particleID[8];
   float betaparticleID[8];
   float Ninelastic;
-  float depositedEnergyECAL_scinti_f_particleID[8];
 
-  float depositedIonEnergyECAL_scinti_f_particleID[8];
-  float depositedIonEnergyECAL_scinti_r_particleID[8];
 
-  float depositedEnergyECAL_cheren_f_particleID[8];
-  float depositedEnergyECAL_cheren_r_particleID[8];
-  float depositedIonEnergyECAL_cheren_f_particleID[8];
-  float depositedIonEnergyECAL_cheren_r_particleID[8];
+
+
+
 
   int tot_phot_cer_Timing_f_total;
   int tot_phot_cer_Timing_r_total;
@@ -105,7 +97,7 @@ public:
   int ECAL_r_total_S;
   int ECAL_f_total_C;
   int ECAL_r_total_C;
-  int tot_phot_cer_ECAL_scinti_f_particleID[8];
+
   int tot_phot_cer_ECAL_scinti_r_particleID[8];
   int tot_phot_cer_ECAL_cheren_f_total;
   int tot_phot_cer_ECAL_cheren_r_total;

@@ -62,7 +62,7 @@ positionz_escape = new vector<float>;
   this->GetTree()->Branch("depositedEnergyEcalDet", &this->depositedEnergyEcalDet, "depositedEnergyEcalDet/F");
 
   this->GetTree()->Branch("depositedIonEnergyTotal", &this->depositedIonEnergyTotal, "depositedIonEnergyTotal/F");
-  this->GetTree()->Branch("depositedIonEnergyECAL_f", &this->depositedIonEnergyECAL_f, "depositedIonEnergyECAL_f[3]/F");
+
 
   this->GetTree()->Branch("depositedIonEnergyWorld", &this->depositedIonEnergyWorld, "depositedIonEnergyWorld/F");
   this->GetTree()->Branch("depositedIonEnergyEcalGap", &this->depositedIonEnergyEcalGap, "depositedIonEnergyEcalGap/F");
@@ -264,7 +264,7 @@ void CreateTree::Clear()
 
   depositedIonEnergyTotal = 0.;
 
-    depositedIonEnergyECAL_f = 0.;
+
 
 
   depositedIonEnergyWorld = 0.;
@@ -296,22 +296,20 @@ void CreateTree::Clear()
   {
     depositedEnergyECAL_absorb_f_particleID[iparticle] = 0.;
 
-    depositedEnergyECAL_scinti_f_particleID[iparticle] = 0.;
 
-    depositedEnergyECAL_cheren_f_particleID[iparticle] = 0.;
+
+
 
 
     
     depositedIonEnergyECAL_absorb_f_particleID[iparticle] = 0.;
     betaparticleID[iparticle] = 0.;
-    depositedIonEnergyECAL_scinti_f_particleID[iparticle] = 0.;
-    depositedIonEnergyECAL_scinti_r_particleID[iparticle] = 0.;
-    depositedIonEnergyECAL_cheren_f_particleID[iparticle] = 0.;
-    depositedIonEnergyECAL_cheren_r_particleID[iparticle] = 0.;
 
-    tot_phot_cer_ECAL_scinti_f_particleID[iparticle] = 0.;
+
+
+
     tot_phot_cer_ECAL_scinti_r_particleID[iparticle] = 0.;
-    tot_phot_cer_ECAL_cheren_f_particleID[iparticle] = 0.;
+
     tot_phot_cer_ECAL_cheren_r_particleID[iparticle] = 0.;
   }
 
