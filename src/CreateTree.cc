@@ -84,8 +84,7 @@ positionz_escape = new vector<float>;
 
   //Cerenkov photons
 
-  this->GetTree()->Branch("tot_phot_cer_Timing_f_total", &this->tot_phot_cer_Timing_f_total, "tot_phot_cer_Timing_f_total/I");
-  this->GetTree()->Branch("tot_phot_cer_Timing_r_total", &this->tot_phot_cer_Timing_r_total, "tot_phot_cer_Timing_r_total/I");
+
 
 
 
@@ -281,8 +280,7 @@ void CreateTree::Clear()
   depositedElecEnergyEcalGap = 0.;
   depositedElecEnergyEcalDet = 0.;
 
-  tot_phot_cer_Timing_f_total = 0.;
-  tot_phot_cer_Timing_r_total = 0.;
+
   ECAL_f_total_C = 0.;
   ECAL_r_total_S = 0.;
   ECAL_f_total_S = 0.;

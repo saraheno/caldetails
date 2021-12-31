@@ -91,8 +91,7 @@ public:
 
 
 
-  int tot_phot_cer_Timing_f_total;
-  int tot_phot_cer_Timing_r_total;
+
   int ECAL_f_total_S;
   int ECAL_r_total_S;
   int ECAL_f_total_C;
