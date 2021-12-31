@@ -171,7 +171,7 @@ public:
   TH1F *inelasticEK;
 
   TH1F *h_totaldepositedE;
-  TH1F *h_kineticenergyescape;
+  TH1F *h_totalpkineticenergyescape;
 
 
 
