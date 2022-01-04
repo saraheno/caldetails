@@ -225,12 +225,20 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
   if(abs(TrPDGid)==22){
     CreateTree::Instance()->ion_z->Fill(global_z, energyIon);
   }
+
+
+  float aabc = thePostPoint->GetGlobalTime() / ns - (global_z+10)/300;
   if(abs(TrPDGid)==22 || abs(TrPDGid)==11){
-    CreateTree::Instance()->h_time_z_egamma->Fill(global_z,thePostPoint->GetGlobalTime() / ns - (global_z+1500) / 300.,energy / GeV);
+    CreateTree::Instance()->h_time_z_egamma->Fill(global_z, aabc,energy / GeV);
+
+    
   } else if(abs(TrPDGid)==2212) {
-  }
-  else{
-    CreateTree::Instance()->h_time_z_othernotproton->Fill(global_z,thePostPoint->GetGlobalTime() / ns - (global_z+1500) / 300.,energy / GeV);
+    CreateTree::Instance()->h_time_z_proton->Fill(global_z,aabc ,energy / GeV);
+  } else if(abs(TrPDGid)==2112) {
+    CreateTree::Instance()->h_time_z_neutron->Fill(global_z,aabc ,energy / GeV);
+  } else{
+    CreateTree::Instance()->h_time_z_othernotpn->Fill(global_z,aabc ,energy / GeV);
+    //    if(aabc>50) std::cout<<"late time "<<aabc<<" for pid "<<TrPDGid<<" with energy deposit "<<energy<<std::endl;
   }
   double inter_len = 223; //mm
   CreateTree::Instance()->ion_rz->Fill(sqrt(global_x*global_x+global_y*global_y), global_z, energyIon);

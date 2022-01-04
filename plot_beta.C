@@ -3,7 +3,7 @@
 
 void plot_beta() {
 
-    TFile* ff=new TFile("data/pion_10GeV_N50_PWO_0degree_3000mm_A1000mm_sipm_1000mm_small_world_pdg_beta_ionenergy_step.root");
+    TFile* ff=new TFile("test.root");
    Float_t         depositedIonEnergyTotal;
    Float_t         depositedIonEnergyECAL_f[3];
    TBranch        *b_depositedIonEnergyTotal;   //!

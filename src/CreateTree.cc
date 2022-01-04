@@ -136,9 +136,10 @@ positionz_escape = new vector<float>;
   ion_r6 = new TH1F("ion_r6","",1500,0,1000);
   ion_r7 = new TH1F("ion_r7","",1500,0,1000);
 
-  h_time_z_egamma = new TH2F("h_time_z_egamma","",1250,-100.,1500, 1250,0,0.5);
-  h_time_z_othernotproton = new TH2F("h_time_z_othernotproton","",1250,-100.,1500,1250,0,0.5);
-  h_time_z_proton = new TH2F("h_time_z_proton","",1250,-100.,1500,1250,0,0.5);
+  h_time_z_egamma = new TH2F("h_time_z_egamma","",1250,-100.,2500, 1250,0,100.0);
+  h_time_z_othernotpn = new TH2F("h_time_z_othernotproton","",1250,-100.,2500,1250,0,100.0);
+  h_time_z_proton = new TH2F("h_time_z_proton","",1250,-100.,2500,1250,0,100.0);
+  h_time_z_neutron = new TH2F("h_time_z_neutron","",1250,-100.,2500,1250,0,100.0);
 
 
   //photon position
@@ -229,8 +230,9 @@ bool CreateTree::Write(TFile *outfile)
   ion_r6->Write();
   ion_r7->Write();
   h_time_z_egamma->Write();
-  h_time_z_othernotproton->Write();
+  h_time_z_othernotpn->Write();
   h_time_z_proton->Write();
+  h_time_z_neutron->Write();
 
 
   pdg_ke->Write();
