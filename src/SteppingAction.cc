@@ -207,6 +207,9 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
 //if(nStep == 1) CreateTree::Instance()->pdg_beta->Fill(TrPDGid,theTrack->GetVelocity()/299.792,);
   CreateTree::Instance()->pdg_beta->Fill(TrPDGid,thePrePoint->GetBeta(),energyIon / GeV);
   CreateTree::Instance()->pdg_ke->Fill(TrPDGid,thePrePoint->GetKineticEnergy(),energyIon / GeV);
+  float aabc2 = thePostPoint->GetGlobalTime() / ns - (global_z+10)/300;
+  if(aabc2>4.999) aabc2=4.999;
+  CreateTree::Instance()->pdg_time->Fill(TrPDGid,aabc2,energyIon / GeV);
 
   if(nStep==1) {
     CreateTree::Instance()->nNeutrons++;

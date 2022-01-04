@@ -167,6 +167,7 @@ public:
   TH2F *h_time_z_neutron;
   TH2F *pdg_beta;
   TH2F *pdg_ke;
+  TH2F *pdg_time;
   TH1F *inelasticEK;
   TH1F *h_nneutrons;
   TH1F *h_keneutrons;

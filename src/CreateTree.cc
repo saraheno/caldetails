@@ -105,6 +105,7 @@ positionz_escape = new vector<float>;
   h_totaldepositedE = new TH1F("h_totaldepositedE","",150,0.,1.5);
   h_totalpkineticenergyescape = new TH1F("h_totalpkineticenergyescape","",150,0.,1.5);
   pdg_ke = new TH2F("pdg_ke","",10000,-5000,5000,100,0,10.);
+  pdg_time = new TH2F("pdg_time","",10000,-5000,5000,200,0,5.);
   h_nneutrons = new TH1F("h_nneutrons","",2000,0.,10000);
   h_keneutrons = new TH1F("h_keneutrons","",150,0.,0.01);
   h_nonelvpe = new TH2F("h_nonelvpe","",100,0.,5.,600,0.,600.);
@@ -236,6 +237,7 @@ bool CreateTree::Write(TFile *outfile)
 
 
   pdg_ke->Write();
+  pdg_time->Write();
   h_totaldepositedE->Write();
   h_totaliondepositedE->Write();
   h_totalpkineticenergyescape->Write();
