@@ -208,6 +208,11 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
   CreateTree::Instance()->pdg_beta->Fill(TrPDGid,thePrePoint->GetBeta(),energyIon / GeV);
   CreateTree::Instance()->pdg_ke->Fill(TrPDGid,thePrePoint->GetKineticEnergy(),energyIon / GeV);
 
+  if(nStep==1) {
+    CreateTree::Instance()->nNeutrons++;
+    CreateTree::Instance()->h_keneutrons->Fill(theStep->GetPreStepPoint()->GetKineticEnergy()/GeV);
+  }
+
 //if(TrPDGid>=111) cout<<energyIon / GeV<<endl;
 
   if(thePostPoint->GetProcessDefinedStep()->GetProcessName().contains("Inelast")){

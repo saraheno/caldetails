@@ -70,6 +70,7 @@ positionz_escape = new vector<float>;
   this->GetTree()->Branch("betaparticleID", &this->betaparticleID, "betaparticleID[8]/F");
   this->GetTree()->Branch("depositedEnergyECAL_absorb_f_particleID", &this->depositedEnergyECAL_absorb_f_particleID, "depositedEnergyECAL_absorb_f_particleID[8]/F");
   this->GetTree()->Branch("Ninelastic", &this->Ninelastic, "Ninelastic/F");
+  this->GetTree()->Branch("nNeutrons", &this->nNeutrons, "nNeutrons/F");
 
 
   this->GetTree()->Branch("depositedElecEnergyTotal", &this->depositedElecEnergyTotal, "depositedElecEnergyTotal/F");
@@ -104,8 +105,13 @@ positionz_escape = new vector<float>;
   h_totaldepositedE = new TH1F("h_totaldepositedE","",150,0.,1.5);
   h_totalpkineticenergyescape = new TH1F("h_totalpkineticenergyescape","",150,0.,1.5);
   pdg_ke = new TH2F("pdg_ke","",10000,-5000,5000,100,0,10.);
-
-
+  h_nneutrons = new TH1F("h_nneutrons","",2000,0.,10000);
+  h_keneutrons = new TH1F("h_keneutrons","",150,0.,0.01);
+  h_nonelvpe = new TH2F("h_nonelvpe","",100,0.,5.,600,0.,600.);
+  h_nonelvlst = new TH2F("h_nonelvlst","",100,0.5,1.1,600,0.,600.);
+  h_nnvlst = new TH2F("h_nnvlst","",100,0.5,1.1,1000,0.,10000.);
+  h_nnvnonel = new TH2F("h_nnvnonel","",2000,0,10000,600,0.,600.);
+  h_pevlst = new TH2F("h_pevlst","",100,0.5,1.1,100,0.,5.);
 
 
   //detected photons 
@@ -130,13 +136,9 @@ positionz_escape = new vector<float>;
   ion_r6 = new TH1F("ion_r6","",1500,0,1000);
   ion_r7 = new TH1F("ion_r7","",1500,0,1000);
 
-  h_time_z_egamma = new TH2F("h_time_z_egamma","",1250,-1500,1500, 1250,0,50);
-  h_time_z_other = new TH2F("h_time_z_other","",1250,-1500,1500,1250,0,50);
+  h_time_z_egamma = new TH2F("h_time_z_egamma","",1250,0.,1500, 1250,0,0.1);
+  h_time_z_other = new TH2F("h_time_z_other","",1250,0.,1500,1250,0,0.1);
 
-  h_phot_detect_time_f_Scin = new TH1F("h_phot_detect_time_f_Scin","",1250,0,25);
-  h_phot_detect_time_r_Scin = new TH1F("h_phot_detect_time_r_Scin","",1250,0,25);
-  h_phot_detect_time_f_Ceren = new TH1F("h_phot_detect_time_f_Ceren","",1250,0,25);
-  h_phot_detect_time_r_Ceren  = new TH1F("h_phot_detect_time_r_Ceren","",1250,0,25);
 
   //photon position
   h_photon_2D_produce_Scin = new TH2F("h_photon_2D_produce_Scin", "", 500, -50, 50, 500, 0., 200);
@@ -183,7 +185,12 @@ int CreateTree::Fill()
   h_totaliondepositedE->Fill( depositedIonEnergyTotal/(inputMomentum->at(3)) );
   h_totaldepositedE->Fill( depositedEnergyTotal/(inputMomentum->at(3)) );
   h_totalpkineticenergyescape->Fill((depositedEnergyTotal+kineticEnergyEscapeWorld)/(inputMomentum->at(3)));
-
+  h_nneutrons->Fill(nNeutrons);
+  h_nonelvpe->Fill(depositedEnergyECAL_absorb_f_particleID[7],Ninelastic);// proton energy deposit versus number of inelastic
+  h_nonelvlst->Fill(depositedEnergyECAL_f/(inputMomentum->at(3)),Ninelastic);
+  h_nnvlst->Fill(depositedEnergyECAL_f/(inputMomentum->at(3)),nNeutrons);
+  h_nnvnonel->Fill(nNeutrons,Ninelastic);
+  h_pevlst->Fill(depositedEnergyECAL_f/(inputMomentum->at(3)),depositedEnergyECAL_absorb_f_particleID[7]);
 
 
   return this->GetTree()->Fill();
@@ -220,19 +227,21 @@ bool CreateTree::Write(TFile *outfile)
   ion_r5->Write();
   ion_r6->Write();
   ion_r7->Write();
-  h_phot_detect_time_f_Scin->Write();
-  h_phot_detect_time_r_Scin->Write();
-  h_phot_detect_time_f_Ceren->Write();
-  h_phot_detect_time_r_Ceren->Write();
   h_time_z_egamma->Write();
   h_time_z_other->Write();
+
 
   pdg_ke->Write();
   h_totaldepositedE->Write();
   h_totaliondepositedE->Write();
   h_totalpkineticenergyescape->Write();
-
-
+  h_nneutrons->Write();
+  h_keneutrons->Write();
+  h_nonelvpe->Write();
+  h_nonelvlst->Write();
+  h_nnvlst->Write();
+  h_nnvnonel->Write();
+  h_pevlst->Write();
 
   return true;
 }
@@ -279,6 +288,7 @@ void CreateTree::Clear()
   SDdetected_rr_S = 0.;
   SDdetected_rr_C = 0.; 
   Ninelastic=0;
+  nNeutrons=0;
   for (int iparticle = 0; iparticle < 8; iparticle++)
   {
     depositedEnergyECAL_absorb_f_particleID[iparticle] = 0.;

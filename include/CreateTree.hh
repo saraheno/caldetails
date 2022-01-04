@@ -82,6 +82,7 @@ public:
   float depositedIonEnergyECAL_absorb_f_particleID[8];
   float betaparticleID[8];
   float Ninelastic;
+  float nNeutrons;
 
 
 
@@ -160,15 +161,18 @@ public:
   TH1F *ion_r7;
 
   TH1F *ion_z;
-  TH1F *h_phot_detect_time_f_Scin;
-  TH1F *h_phot_detect_time_r_Scin;
-  TH1F *h_phot_detect_time_f_Ceren;
-  TH1F *h_phot_detect_time_r_Ceren;
   TH2F *h_time_z_egamma;
   TH2F *h_time_z_other;
   TH2F *pdg_beta;
   TH2F *pdg_ke;
   TH1F *inelasticEK;
+  TH1F *h_nneutrons;
+  TH1F *h_keneutrons;
+  TH2F *h_nonelvpe;
+  TH2F *h_nonelvlst;
+  TH2F *h_nnvlst;
+  TH2F *h_nnvnonel;
+  TH2F *h_pevlst;
 
   TH1F *h_totaliondepositedE;
   TH1F *h_totaldepositedE;
