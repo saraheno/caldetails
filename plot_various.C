@@ -55,7 +55,7 @@ void plot_various() {
 
     hTotalE->Fill(depositedEnergyTotal/trueE);
     hWorldE->Fill((depositedEnergyTotal+kineticEnergyEscapeWorld)/trueE);
-    h_nonel->Fill(Ninelastic,depositedEnergyECAL_absorb_f_particleID[7]);
+    h_nonel->Fill(depositedEnergyECAL_absorb_f_particleID[7],Ninelastic);
 		    
   }
 
