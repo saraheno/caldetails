@@ -7,7 +7,7 @@
 
 
 
-void plot_noninel() {
+void plot_various() {
 
   const char* inputfilename="test.root";
   const char* outputfilename="test_hist.root";
@@ -15,7 +15,7 @@ void plot_noninel() {
   TH1F *hTotalE = new TH1F("hTotalE","energy depisited /true",600,0.,1.1);
   TH1F *hWorldE = new TH1F("hWorldE","energy total world /true",600,0.,1.1);
   TH2F *h_nonel = new TH2F("h_nonel","number inelastic vs proton E deposit",
-			   100,0.,5.,600,0.,1.1);
+			   100,0.,5.,600,0.,600);
 
 
   TFile *f = new TFile(inputfilename);
