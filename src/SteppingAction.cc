@@ -227,8 +227,10 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
   }
   if(abs(TrPDGid)==22 || abs(TrPDGid)==11){
     CreateTree::Instance()->h_time_z_egamma->Fill(global_z,thePostPoint->GetGlobalTime() / ns - (global_z+1500) / 300.,energy / GeV);
-  }else{
-    CreateTree::Instance()->h_time_z_other->Fill(global_z,thePostPoint->GetGlobalTime() / ns - (global_z+1500) / 300.,energy / GeV);
+  } else if(abs(TrPDGid)==2212) {
+  }
+  else{
+    CreateTree::Instance()->h_time_z_othernotproton->Fill(global_z,thePostPoint->GetGlobalTime() / ns - (global_z+1500) / 300.,energy / GeV);
   }
   double inter_len = 223; //mm
   CreateTree::Instance()->ion_rz->Fill(sqrt(global_x*global_x+global_y*global_y), global_z, energyIon);

@@ -162,7 +162,8 @@ public:
 
   TH1F *ion_z;
   TH2F *h_time_z_egamma;
-  TH2F *h_time_z_other;
+  TH2F *h_time_z_othernotproton;
+  TH2F *h_time_z_proton;
   TH2F *pdg_beta;
   TH2F *pdg_ke;
   TH1F *inelasticEK;
