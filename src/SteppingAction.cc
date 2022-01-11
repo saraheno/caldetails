@@ -141,6 +141,7 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
   G4double energyKaon = 0.;
   G4double energyNeutron = 0.;
   G4double energyProton = 0.;
+  G4double energyOther = 0.;
   //ion energy by particle types
   G4double energyIonPion_n = 0.;
   G4double energyIonPositron = 0.;
@@ -150,6 +151,7 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
   G4double energyIonKaon = 0.;
   G4double energyIonNeutron = 0.;
   G4double energyIonProton = 0.;
+  G4double energyIonOther =0.;
 
   if (TrPDGid == (-211))
   {
@@ -191,6 +193,10 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
     energyProton = energy;
     energyIonProton = energyIon;
   }
+  else {
+    energyOther = energy;
+    energyIonOther =energyIon;
+  }
   energyElec = energyIonPositron + energyIonElectron + energyIonPhoton;
 
   //std::cout<<"TrPDGid energy energyIon enegyElec are "<<TrPDGid<<" "<<energy<<" "<<energyIon<<" "<<energyElec<<std::endl;
@@ -208,8 +214,47 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
   CreateTree::Instance()->pdg_beta->Fill(TrPDGid,thePrePoint->GetBeta(),energyIon / GeV);
   CreateTree::Instance()->pdg_ke->Fill(TrPDGid,thePrePoint->GetKineticEnergy(),energyIon / GeV);
   float aabc2 = thePostPoint->GetGlobalTime() / ns - (global_z+10)/300;
+  float aabc3=aabc2;
   if(aabc2>4.999) aabc2=4.999;
+  if(aabc3>499) aabc3=499;
   CreateTree::Instance()->pdg_time->Fill(TrPDGid,aabc2,energyIon / GeV);
+  CreateTree::Instance()->pdg_time2->Fill(TrPDGid,aabc3,energyIon / GeV);
+
+ 
+  int itime=aabc2/0.25;
+  if(itime<0) itime=10;
+  if(itime>79) itime=10;
+
+  if(TrPDGid==-211) {
+    CreateTree::Instance()->depositedIonEnergyECAL_pidtime[0][itime] += energyIon / GeV;
+  } 
+  else if(TrPDGid==-11) {
+    CreateTree::Instance()->depositedIonEnergyECAL_pidtime[1][itime] += energyIon / GeV;
+  }
+  else if(TrPDGid==11) {
+    CreateTree::Instance()->depositedIonEnergyECAL_pidtime[2][itime] += energyIon / GeV;
+  }
+  else if(TrPDGid==22) {
+    CreateTree::Instance()->depositedIonEnergyECAL_pidtime[3][itime] += energyIon / GeV;
+  }
+  else if(TrPDGid==211) {
+    CreateTree::Instance()->depositedIonEnergyECAL_pidtime[4][itime] += energyIon / GeV;
+  }
+  else if(TrPDGid==321) {
+    CreateTree::Instance()->depositedIonEnergyECAL_pidtime[5][itime] += energyIon / GeV;
+  }
+  else if(TrPDGid==2112) {
+    CreateTree::Instance()->depositedIonEnergyECAL_pidtime[6][itime] += energyIon / GeV;
+  }
+  else if(TrPDGid==2212) {
+    CreateTree::Instance()->depositedIonEnergyECAL_pidtime[7][itime] += energyIon / GeV;
+  }
+  else {
+    if(fabs(TrPDGid)<1000000000) std::cout<<" other pid is "<<TrPDGid<<std::endl;
+    CreateTree::Instance()->depositedIonEnergyECAL_pidtime[8][itime] += energyIon / GeV;
+  }
+
+
 
   if(nStep==1) {
     CreateTree::Instance()->nNeutrons++;
@@ -417,6 +462,10 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
 
       CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[7] += energyProton / GeV;
       CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[7] += energyIonProton / GeV;
+
+
+      CreateTree::Instance()->depositedEnergyECAL_absorb_f_particleID[8] += energyOther / GeV;
+      CreateTree::Instance()->depositedIonEnergyECAL_absorb_f_particleID[8] += energyIonOther / GeV;
     }
     
 

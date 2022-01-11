@@ -78,9 +78,10 @@ public:
 
   //store the energy deposition by components
 
-  float depositedEnergyECAL_absorb_f_particleID[8];
-  float depositedIonEnergyECAL_absorb_f_particleID[8];
-  float betaparticleID[8];
+  float depositedEnergyECAL_absorb_f_particleID[9];
+  float depositedIonEnergyECAL_absorb_f_particleID[9];
+  float depositedIonEnergyECAL_pidtime[9][80];
+  float betaparticleID[9];
   float Ninelastic;
   float nNeutrons;
 
@@ -95,11 +96,6 @@ public:
   int ECAL_f_total_C;
   int ECAL_r_total_C;
 
-
-  int tot_phot_cer_ECAL_cheren_f_total;
-  int tot_phot_cer_ECAL_cheren_r_total;
-  int tot_phot_cer_ECAL_cheren_f_particleID[8];
-  int tot_phot_cer_ECAL_cheren_r_particleID[8];
 
 
   int SDdetected_ff_S;
@@ -168,6 +164,7 @@ public:
   TH2F *pdg_beta;
   TH2F *pdg_ke;
   TH2F *pdg_time;
+  TH2F *pdg_time2;
   TH1F *inelasticEK;
   TH1F *h_nneutrons;
   TH1F *h_keneutrons;

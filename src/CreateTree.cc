@@ -66,9 +66,10 @@ positionz_escape = new vector<float>;
   this->GetTree()->Branch("depositedIonEnergyECAL_f", &this->depositedIonEnergyECAL_f, "depositedIonEnergyECAL_f/F");
   this->GetTree()->Branch("depositedIonEnergyWorld", &this->depositedIonEnergyWorld, "depositedIonEnergyWorld/F");
   this->GetTree()->Branch("depositedIonEnergyWrap", &this->depositedIonEnergyWrap, "depositedIonEnergyWrap/F");
-  this->GetTree()->Branch("depositedIonEnergyECAL_absorb_f_particleID", &this->depositedIonEnergyECAL_absorb_f_particleID, "depositedIonEnergyECAL_absorb_f_particleID[8]/F");
-  this->GetTree()->Branch("betaparticleID", &this->betaparticleID, "betaparticleID[8]/F");
-  this->GetTree()->Branch("depositedEnergyECAL_absorb_f_particleID", &this->depositedEnergyECAL_absorb_f_particleID, "depositedEnergyECAL_absorb_f_particleID[8]/F");
+  this->GetTree()->Branch("depositedIonEnergyECAL_absorb_f_particleID", &this->depositedIonEnergyECAL_absorb_f_particleID, "depositedIonEnergyECAL_absorb_f_particleID[9]/F");
+  this->GetTree()->Branch("depositedIonEnergyECAL_pidtime", &this->depositedIonEnergyECAL_pidtime, "depositedIonEnergyECAL_pidtime[9][80]/F");
+  this->GetTree()->Branch("betaparticleID", &this->betaparticleID, "betaparticleID[9]/F");
+  this->GetTree()->Branch("depositedEnergyECAL_absorb_f_particleID", &this->depositedEnergyECAL_absorb_f_particleID, "depositedEnergyECAL_absorb_f_particleID[9]/F");
   this->GetTree()->Branch("Ninelastic", &this->Ninelastic, "Ninelastic/F");
   this->GetTree()->Branch("nNeutrons", &this->nNeutrons, "nNeutrons/F");
 
@@ -106,6 +107,7 @@ positionz_escape = new vector<float>;
   h_totalpkineticenergyescape = new TH1F("h_totalpkineticenergyescape","",150,0.,1.5);
   pdg_ke = new TH2F("pdg_ke","",10000,-5000,5000,100,0,10.);
   pdg_time = new TH2F("pdg_time","",10000,-5000,5000,200,0,5.);
+  pdg_time2 = new TH2F("pdg_time2","",10000,-5000,5000,50,0,500.);
   h_nneutrons = new TH1F("h_nneutrons","",2000,0.,10000);
   h_keneutrons = new TH1F("h_keneutrons","",150,0.,0.01);
   h_nonelvpe = new TH2F("h_nonelvpe","",100,0.,5.,600,0.,600.);
@@ -185,6 +187,13 @@ int CreateTree::Fill()
   std::cout<<"diff is "<<diff<<std::endl;
 
 
+  for(int i=0;i<9;i++ ) {
+    for(int k=0;k<80;k++) {
+      std::cout<<"depositedIonEnergyECAL_pidtime["<<i<<","<<k<<"] is "<<depositedIonEnergyECAL_pidtime[i][k]<<std::endl;
+    }
+  }
+
+
   h_totaliondepositedE->Fill( depositedIonEnergyTotal/(inputMomentum->at(3)) );
   h_totaldepositedE->Fill( depositedEnergyTotal/(inputMomentum->at(3)) );
   h_totalpkineticenergyescape->Fill((depositedEnergyTotal+kineticEnergyEscapeWorld)/(inputMomentum->at(3)));
@@ -238,6 +247,7 @@ bool CreateTree::Write(TFile *outfile)
 
   pdg_ke->Write();
   pdg_time->Write();
+  pdg_time2->Write();
   h_totaldepositedE->Write();
   h_totaliondepositedE->Write();
   h_totalpkineticenergyescape->Write();
@@ -295,25 +305,17 @@ void CreateTree::Clear()
   SDdetected_rr_C = 0.; 
   Ninelastic=0;
   nNeutrons=0;
-  for (int iparticle = 0; iparticle < 8; iparticle++)
+  for (int iparticle = 0; iparticle < 9; iparticle++)
   {
-    depositedEnergyECAL_absorb_f_particleID[iparticle] = 0.;
-
-
-
-
-
-
-    
+    depositedEnergyECAL_absorb_f_particleID[iparticle] = 0.;  
     depositedIonEnergyECAL_absorb_f_particleID[iparticle] = 0.;
     betaparticleID[iparticle] = 0.;
 
 
+    for (int jtime =0;jtime<80;jtime++) {
+      depositedIonEnergyECAL_pidtime[iparticle][jtime]=0.;
+    }
 
-
-
-
-    tot_phot_cer_ECAL_cheren_r_particleID[iparticle] = 0.;
   }
 
 
