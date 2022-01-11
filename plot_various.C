@@ -22,6 +22,10 @@ void plot_various() {
   TH2F *h_nonel2 = new TH2F("h_nonel2","number inelastic vs  deposit after 4ns",
 			   100,0.,5.,600,0.,600);
 
+  TH2F *h_nonel3 = new TH2F("h_nonel3","number inelastic vs  total E deposition",
+			   100,0.,15.,600,0.,600);
+
+
   TFile *f = new TFile(inputfilename);
   TTree *t1 = (TTree*)f->Get("tree");
 
@@ -98,6 +102,7 @@ void plot_various() {
     hWorldE->Fill((depositedEnergyTotal+kineticEnergyEscapeWorld)/trueE);
     h_nonel->Fill(depositedEnergyECAL_absorb_f_particleID[7],Ninelastic);
     h_nonel2->Fill(alate,Ninelastic);
+    h_nonel3->Fill(depositedEnergyTotal,Ninelastic);
 		    
   }
 
@@ -108,6 +113,7 @@ void plot_various() {
   hWorldE->Write();
   h_nonel->Write();
   h_nonel2->Write();
+  h_nonel3->Write();
   out->Close();
 
 }
