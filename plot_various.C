@@ -32,7 +32,7 @@ void plot_various() {
   float depositedEnergyTotal,depositedEnergyWorld;
   float depositedIonEnergyTotal;
   float depositedEnergyECAL_absorb_f_particleID[9];
-  float depositedIonEnergyECAL_pidtime[9][20];
+  float depositedIonEnergyECAL_pidtime[9][80];
 
   t1->SetBranchAddress("inputMomentum",&inputMomentum);
   t1->SetBranchAddress("kineticEnergyEscapeWorld",&kineticEnergyEscapeWorld);
@@ -68,10 +68,10 @@ void plot_various() {
     }
     float alate=0.;
     for (int j=0;j<9;j++) {
-      for (int k=0;k<20;k++) {
+      for (int k=0;k<80;k++) {
 	acheck[j]+=depositedIonEnergyECAL_pidtime[j][k];
       }
-      for (int k=15;k<20;k++) {
+      for (int k=15;k<80;k++) {
 	alate+=depositedIonEnergyECAL_pidtime[j][k];
       }
     }
