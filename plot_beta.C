@@ -1,9 +1,14 @@
 
 
 
-void plot_beta() {
+void plot_beta(char* input) {
 
-    TFile* ff=new TFile("test.root");
+
+  TStyle *myStyle  = new TStyle("MyStyle","My Root Styles");
+  myStyle->SetOptStat(0);
+
+
+    TFile* ff=new TFile(input);
    Float_t         depositedIonEnergyTotal;
    Float_t         depositedIonEnergyECAL_f[3];
    TBranch        *b_depositedIonEnergyTotal;   //!
@@ -37,22 +42,52 @@ TH1D* n = ((TH2D*) ff->Get("pdg_beta"))->ProjectionY("",7112,7114);
 TH1D *hn = (TH1D*) n->Clone();
 
 
+
+
 TCanvas*c=new TCanvas();
-hpip->Draw("HIST");
+c->SetLogy(1);
+
+
+
+hem->Draw("HIST");
+hpip->Draw("same HIST");
 hpim->Draw("same HIST");
-hpi0->Draw("same HIST");
+//hpi0->Draw("same HIST");
 hep->Draw("same HIST");
-hem->Draw("same HIST");
+//hem->Draw("same HIST");
 hp->Draw("same HIST");
 hn->Draw("same HIST");
 
-hpip->SetTitle("pi+;#beta;fraction of ionizing energy");
+
+   hpip->Scale(1.0/total_ion);
+   hpim->Scale(1.0/total_ion);
+   hpi0->Scale(1.0/total_ion);
+   hep->Scale(1.0/total_ion);
+   hem->Scale(1.0/total_ion);
+   hp->Scale(1.0/total_ion);
+   hn->Scale(1.0/total_ion);
+
+
+
+hpip->SetTitle("pi+");
 hpim->SetTitle("pi-");
 hpi0->SetTitle("pi0");
 hep->SetTitle("e+");
-hem->SetTitle("e-");
+hem->SetTitle("e-;#beta;fraction of ionizing energy");
 hp->SetTitle("proton");
 hn->SetTitle("neutron");
+
+
+   // has to be called after the scale
+
+ hem->SetAxisRange(0.001,0.2,"Y");
+ hpip->SetAxisRange(0.001,0.2,"Y");
+ hpim->SetAxisRange(0.001,0.2,"Y");
+ hep->SetAxisRange(0.001,0.2,"Y");
+ hem->SetAxisRange(0.001,0.2,"Y");
+ hp->SetAxisRange(0.001,0.2,"Y");
+ hn->SetAxisRange(0.001,0.2,"Y");
+
 
    hpip->SetLineColor(kBlack);
    hpim->SetLineColor(kBlue);
@@ -70,14 +105,6 @@ hn->SetTitle("neutron");
    hp->SetLineWidth(3);
    hn->SetLineWidth(3);
 
-   hpip->Scale(1.0/total_ion);
-   hpim->Scale(1.0/total_ion);
-   hpi0->Scale(1.0/total_ion);
-   hep->Scale(1.0/total_ion);
-   hem->Scale(1.0/total_ion);
-   hp->Scale(1.0/total_ion);
-   hn->Scale(1.0/total_ion);
-
 cout<<hpip->Integral()+hpim->Integral()+hpi0->Integral()+hep->Integral()+hem->Integral()+hp->Integral()+hn->Integral()<<endl;
 cout<<((TH2D*)ff->Get("pdg_beta"))->Integral(0,10000,0,101)<<endl;
 
@@ -90,7 +117,8 @@ cout<<((TH2D*)ff->Get("pdg_beta"))->Integral(0,10000,0,101)<<endl;
    hp->Scale(1.0/hp->Integral());
    hn->Scale(1.0/hn->Integral());
 */
-c->BuildLegend();
+c->BuildLegend(0.3, 0.6,0.6,0.9);
+// c->BuildLegend();
 
 }
 
