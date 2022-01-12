@@ -7,19 +7,23 @@
 
 
 
-void plot_various() {
+void plot_various(char* input) {
 
   bool idebug = 1;
 
+  TStyle *myStyle  = new TStyle("MyStyle","My Root Styles");
+  myStyle->SetOptStat(0);
 
-  const char* inputfilename="test.root";
-  const char* outputfilename="test_hist.root";
+
+
+  const char* inputfilename=input;
+  const char* outputfilename="hist.root";
 
   TH1F *hTotalE = new TH1F("hTotalE","energy depisited /true",600,0.,1.1);
   TH1F *hWorldE = new TH1F("hWorldE","energy total world /true",600,0.,1.1);
   TH2F *h_nonel = new TH2F("h_nonel","number inelastic vs proton E deposit",
 			   100,0.,5.,600,0.,600);
-  TH2F *h_nonel2 = new TH2F("h_nonel2","number inelastic vs  deposit after 4ns",
+  TH2F *h_nonel2 = new TH2F("h_nonel2","number inelastic vs  deposit after 1.25ns",
 			   100,0.,10.,600,0.,600);
 
   TH2F *h_nonel3 = new TH2F("h_nonel3","number inelastic vs  total E deposition",
@@ -179,6 +183,10 @@ void plot_various() {
 
 
 
+
+
+
+
   h_timepim->SetMarkerColor(kBlack);
   h_timeep->SetMarkerColor(kBlue);
   h_timeem->SetMarkerColor(kRed);
@@ -201,6 +209,18 @@ void plot_various() {
   h_timep->SetLineColor(kPink);
   h_timeo->SetLineColor(kYellow);
 
+
+  h_timepim->SetTitle("pi-");
+  h_timeep->SetTitle("e+");
+  h_timeem->SetTitle("e-;time (ns); fraction of ionizing energy");
+  h_timegam->SetTitle("gamma");
+  h_timepip->SetTitle("pi+");
+  h_timek->SetTitle("k");
+  h_timen->SetTitle("n");
+  h_timep->SetTitle("p");
+  h_timeo->SetTitle("other");
+
+
   TCanvas *c = new TCanvas();
   c->SetLogy(1);
 
@@ -209,11 +229,15 @@ void plot_various() {
   h_timeep->Draw("same HIST");
   h_timegam->Draw("same HIST");
   h_timepip->Draw("same HIST");
-  h_timek->Draw("same HIST");
-  h_timen->Draw("same HIST");
+  //h_timek->Draw("same HIST");
+  //h_timen->Draw("same HIST");
   h_timep->Draw("same HIST");
   h_timeo->Draw("same HIST");
 
+
+
+
+  c->BuildLegend(0.3,0.6,0.6,0.9);
 
 }
 
