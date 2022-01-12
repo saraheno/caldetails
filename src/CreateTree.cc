@@ -186,12 +186,13 @@ int CreateTree::Fill()
   float diff = depositedEnergyTotal - depositedEnergyECAL_f-depositedEnergyWrap-depositedEnergyWorld;
   std::cout<<"diff is "<<diff<<std::endl;
 
-
+  /*
   for(int i=0;i<9;i++ ) {
     for(int k=0;k<80;k++) {
       std::cout<<"depositedIonEnergyECAL_pidtime["<<i<<","<<k<<"] is "<<depositedIonEnergyECAL_pidtime[i][k]<<std::endl;
     }
   }
+  */
 
 
   h_totaliondepositedE->Fill( depositedIonEnergyTotal/(inputMomentum->at(3)) );

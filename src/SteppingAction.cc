@@ -215,15 +215,15 @@ void SteppingAction::UserSteppingAction(const G4Step *theStep)
   CreateTree::Instance()->pdg_ke->Fill(TrPDGid,thePrePoint->GetKineticEnergy(),energyIon / GeV);
   float aabc2 = thePostPoint->GetGlobalTime() / ns - (global_z+10)/300;
   float aabc3=aabc2;
-  if(aabc2>4.999) aabc2=4.999;
+  if(aabc2>19.99) aabc2=19.99;
   if(aabc3>499) aabc3=499;
   CreateTree::Instance()->pdg_time->Fill(TrPDGid,aabc2,energyIon / GeV);
   CreateTree::Instance()->pdg_time2->Fill(TrPDGid,aabc3,energyIon / GeV);
 
  
   int itime=aabc2/0.25;
-  if(itime<0) itime=10;
-  if(itime>79) itime=10;
+  if(itime<0) itime=40;
+  if(itime>79) itime=40;
 
   if(TrPDGid==-211) {
     CreateTree::Instance()->depositedIonEnergyECAL_pidtime[0][itime] += energyIon / GeV;

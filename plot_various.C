@@ -20,10 +20,23 @@ void plot_various() {
   TH2F *h_nonel = new TH2F("h_nonel","number inelastic vs proton E deposit",
 			   100,0.,5.,600,0.,600);
   TH2F *h_nonel2 = new TH2F("h_nonel2","number inelastic vs  deposit after 4ns",
-			   100,0.,5.,600,0.,600);
+			   100,0.,10.,600,0.,600);
 
   TH2F *h_nonel3 = new TH2F("h_nonel3","number inelastic vs  total E deposition",
 			   100,0.,15.,600,0.,600);
+
+
+
+  TH1F *h_timepim = new TH1F("h_timepim","",80,0.,20.);
+  TH1F *h_timeep = new TH1F("h_timeep","",80,0.,20.);
+  TH1F *h_timeem = new TH1F("h_timeem","",80,0.,20.);
+  TH1F *h_timegam = new TH1F("h_timegam","",80,0.,20.);
+  TH1F *h_timepip = new TH1F("h_timepip","",80,0.,20.);
+  TH1F *h_timek = new TH1F("h_timek","",80,0.,20.);
+  TH1F *h_timen = new TH1F("h_timen","",80,0.,20.);
+  TH1F *h_timep = new TH1F("h_timep","",80,0.,20.);
+  TH1F *h_timeo = new TH1F("h_timeo","",80,0.,20.);
+
 
 
   TFile *f = new TFile(inputfilename);
@@ -49,6 +62,10 @@ void plot_various() {
 
 
   float acheck[9];
+  float acheck2[9];
+  for (int j=0;j<9;j++) {
+    acheck2[j]=0.;
+  }
 
   Int_t nentries = (Int_t)t1->GetEntries();
   for(Int_t i=0;i<nentries; i++) {
@@ -74,8 +91,10 @@ void plot_various() {
     for (int j=0;j<9;j++) {
       for (int k=0;k<80;k++) {
 	acheck[j]+=depositedIonEnergyECAL_pidtime[j][k];
+	acheck2[j]+=depositedIonEnergyECAL_pidtime[j][k];
       }
-      for (int k=15;k<80;k++) {
+      //      for (int k=15;k<80;k++) {
+      for (int k=5;k<80;k++) {
 	alate+=depositedIonEnergyECAL_pidtime[j][k];
       }
     }
@@ -104,9 +123,42 @@ void plot_various() {
     h_nonel2->Fill(alate,Ninelastic);
     h_nonel3->Fill(depositedEnergyTotal,Ninelastic);
 		    
+    for (int j=0;j<80;j++) {
+      float atime = j*0.25+(0.25/2);
+
+      
+      h_timepim->Fill(atime,depositedIonEnergyECAL_pidtime[0][j]);
+      h_timeep->Fill(atime,depositedIonEnergyECAL_pidtime[1][j]);
+      h_timeem->Fill(atime,depositedIonEnergyECAL_pidtime[2][j]);
+      h_timegam->Fill(atime,depositedIonEnergyECAL_pidtime[3][j]);
+      h_timepip->Fill(atime,depositedIonEnergyECAL_pidtime[4][j]);
+      h_timek->Fill(atime,depositedIonEnergyECAL_pidtime[5][j]);
+      h_timen->Fill(atime,depositedIonEnergyECAL_pidtime[6][j]);
+      h_timep->Fill(atime,depositedIonEnergyECAL_pidtime[7][j]);
+      h_timeo->Fill(atime,depositedIonEnergyECAL_pidtime[8][j]);
+    }
+
+
   }
 
+  h_timepim->Scale(1./acheck2[0]);
+  h_timeep->Scale(1./acheck2[1]);
+  h_timeem->Scale(1./acheck2[2]);
+  h_timegam->Scale(1./acheck2[3]);
+  h_timepip->Scale(1./acheck2[4]);
+  h_timek->Scale(1./acheck2[5]);
+  h_timen->Scale(1./acheck2[6]);
+  h_timep->Scale(1./acheck2[7]);
+  h_timeo->Scale(1./acheck2[8]);
+
+
   f->Close();
+  /*
+  for(int ii=0;ii<80;ii++) {
+    float aaaa=h_timeep->GetBinContent(ii);
+    std::cout<<" bin "<<ii<<" = "<<aaaa<<std::endl;
+  }
+  */
 
   TFile * out = new TFile(outputfilename,"RECREATE");
   hTotalE->Write();
@@ -114,7 +166,55 @@ void plot_various() {
   h_nonel->Write();
   h_nonel2->Write();
   h_nonel3->Write();
+  h_timepim->Write();
+  h_timeep->Write();
+  h_timeem->Write();
+  h_timegam->Write();
+  h_timepip->Write();
+  h_timek->Write();
+  h_timen->Write();
+  h_timep->Write();
+  h_timeo->Write();
   out->Close();
+
+
+
+  h_timepim->SetMarkerColor(kBlack);
+  h_timeep->SetMarkerColor(kBlue);
+  h_timeem->SetMarkerColor(kRed);
+  h_timegam->SetMarkerColor(kGreen);
+  h_timepip->SetMarkerColor(kCyan);
+  h_timek->SetMarkerColor(kOrange);
+  h_timen->SetMarkerColor(kGray);
+  h_timep->SetMarkerColor(kPink);
+  h_timeo->SetMarkerColor(kYellow);
+
+
+
+  h_timepim->SetLineColor(kBlack);
+  h_timeep->SetLineColor(kBlue);
+  h_timeem->SetLineColor(kRed);
+  h_timegam->SetLineColor(kGreen);
+  h_timepip->SetLineColor(kCyan);
+  h_timek->SetLineColor(kOrange);
+  h_timen->SetLineColor(kGray);
+  h_timep->SetLineColor(kPink);
+  h_timeo->SetLineColor(kYellow);
+
+  TCanvas *c = new TCanvas();
+  c->SetLogy(1);
+
+  h_timeem->Draw("HIST");
+  h_timepim->Draw("SAME");
+  h_timeep->Draw("SAME");
+
+  h_timegam->Draw("SAME");
+  h_timepip->Draw("SAME");
+  h_timek->Draw("SAME");
+  h_timen->Draw("SAME");
+  h_timep->Draw("SAME");
+  h_timeo->Draw("SAME");
+
 
 }
 
