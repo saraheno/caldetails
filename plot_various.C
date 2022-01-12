@@ -205,15 +205,14 @@ void plot_various() {
   c->SetLogy(1);
 
   h_timeem->Draw("HIST");
-  h_timepim->Draw("SAME");
-  h_timeep->Draw("SAME");
-
-  h_timegam->Draw("SAME");
-  h_timepip->Draw("SAME");
-  h_timek->Draw("SAME");
-  h_timen->Draw("SAME");
-  h_timep->Draw("SAME");
-  h_timeo->Draw("SAME");
+  h_timepim->Draw("same HIST");
+  h_timeep->Draw("same HIST");
+  h_timegam->Draw("same HIST");
+  h_timepip->Draw("same HIST");
+  h_timek->Draw("same HIST");
+  h_timen->Draw("same HIST");
+  h_timep->Draw("same HIST");
+  h_timeo->Draw("same HIST");
 
 
 }
